@@ -5,6 +5,8 @@
 package com.uDistrital.avanzada.parcialUno.modelo;
 
 /**
+ * Permite la conexion entre el driver y la base de datos a traves del cliente
+ * 
  *
  * @author jeiso
  */
@@ -15,7 +17,8 @@ import java.sql.SQLException;
 public class Conexion {
 
     private static Connection cn = null;
-    private static String URLBD = "jdbc:mysql://localhost/colegio";
+    //Tenemos 
+    private static String URLBD = "jdbc:mysql://localhost:3007/mascotas";
     private static String usuario = "root";
     private static String contrasena = "";
 
