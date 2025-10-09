@@ -2,19 +2,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.uDistrital.avanzada.parcialUno.modelo;
+package com.uDistrital.avanzada.parcialUno.modelo.conexion;
 
 /**
  * Permite la conexion entre el driver y la base de datos a traves del cliente
- * 
+ *
  *
  * @author jeiso
  */
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import com.uDistrital.avanzada.parcialUno.modelo.interfaces.IConexion;
 
-public class Conexion {
+public class ConexionBaseDatos implements IConexion {
 
     private static Connection cn = null;
     //Tenemos 
@@ -22,18 +23,18 @@ public class Conexion {
     private static String usuario = "root";
     private static String contrasena = "";
 
-    public static Connection getConexion() {
+    @Override
+    public void conectar() throws Exception {
         try {
-cn = DriverManager.getConnection(URLBD, usuario, contrasena);
+            cn = DriverManager.getConnection(URLBD, usuario, contrasena);
         } catch (SQLException ex) {
-            System.out.println("No se puede cargar el controlado");
+
         }
-        return cn;
+
     }
 
-    public static void desconectar() {
+    @Override
+    public void desconectar() throws Exception {
         cn = null;
     }
 }
-
-
