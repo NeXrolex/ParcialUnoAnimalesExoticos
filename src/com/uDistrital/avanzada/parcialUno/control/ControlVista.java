@@ -4,15 +4,19 @@
  */
 package com.uDistrital.avanzada.parcialUno.control;
 
-/**Encargado de iniciar el programa
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+/**
  *
  * @author Alex
  */
-public class Launcher {
+public class ControlVista implements ActionListener {
     
-    public static void main(String[] arg){
-        
-        new ControlGeneral();
+    private ControlGeneral cGeneral;
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
         
     }
     
