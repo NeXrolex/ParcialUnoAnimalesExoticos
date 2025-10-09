@@ -19,7 +19,10 @@ public class MascotaVO implements Serializable {
     private String genero;
     private String especie;
     private String alimentoPrincipal;
-
+    
+    /**
+     * Constructor vacio
+     */
     public MascotaVO() {
 
     }

@@ -3,16 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.uDistrital.avanzada.parcialUno.control;
-
 /**
  *
- * @author jeiso
- */
-package com.uDistrital.avanzada.parcialUno.control;
-
-/**
- *
- * @author jeiso
+ * @author jeison
  */
 public class MascotaDAO {
     
