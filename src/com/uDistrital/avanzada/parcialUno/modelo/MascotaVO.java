@@ -12,8 +12,7 @@ import java.io.Serializable;
  */
 public class MascotaVO extends Animal {
 
-    private String apodo;
-
+    private String apodo; //Identificador especializado de un animal
     /**
      * Constructor encargado de asignar los valores comunes de una mascoata
      *
