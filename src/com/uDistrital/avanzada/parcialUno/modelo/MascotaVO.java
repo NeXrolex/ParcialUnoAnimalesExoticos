@@ -10,23 +10,9 @@ import java.io.Serializable;
  *
  * @author jeisoS,Alex
  */
-public class MascotaVO implements Serializable {
+public class MascotaVO extends Animal {
 
-    private String nombreComun;
-    private String apodo;
-    private String clasificacion;
-    private String familia;
-    private String genero;
-    private String especie;
-    private String alimentoPrincipal;
-    
-    /**
-     * Constructor vacio
-     */
-    public MascotaVO() {
-
-    }
-
+    private String apodo; //Identificador especializado de un animal
     /**
      * Constructor encargado de asignar los valores comunes de una mascoata
      *
@@ -39,35 +25,12 @@ public class MascotaVO implements Serializable {
      * @param especie Especie a la que pertenece la mascota
      * @param alimentoPrincipal Alimento del cual se alimenta el animal *
      */
-
-    public MascotaVO(String nombreComun, String apodo, String clasificacion,
-            String familia, String genero, String especie, String alimentoPrincipal) {
-
-        this.nombreComun = nombreComun;
+    public MascotaVO(String apodo, String nombreComun, String clasificacion,
+            String familia, String genero, String especie,
+            String alimentoPrincipal) {
+        super(nombreComun, clasificacion, familia, genero, especie,
+                alimentoPrincipal);
         this.apodo = apodo;
-        this.clasificacion = clasificacion;
-        this.familia = familia;
-        this.genero = genero;
-        this.especie = especie;
-        this.alimentoPrincipal = alimentoPrincipal;
-
-    }
-
-    public String getGenero() {
-        return genero;
-    }
-
-    public void setGenero(String genero) {
-        this.genero = genero;
-    }
-    
-
-    public String getNombreComun() {
-        return nombreComun;
-    }
-
-    public void setNombreComun(String nombreComun) {
-        this.nombreComun = nombreComun;
     }
 
     public String getApodo() {
@@ -77,39 +40,8 @@ public class MascotaVO implements Serializable {
     public void setApodo(String apodo) {
         this.apodo = apodo;
     }
-
-    public String getClasificacion() {
-        return clasificacion;
-    }
-
-    public void setClasificacion(String clasificacion) {
-        this.clasificacion = clasificacion;
-    }
-
-    public String getFamilia() {
-        return familia;
-    }
-
-    public void setFamilia(String familia) {
-        this.familia = familia;
-    }
-
-    public String getEspecie() {
-        return especie;
-    }
-
-    public void setEspecie(String especie) {
-        this.especie = especie;
-    }
-
-    public String getAlimentoPrincipal() {
-        return alimentoPrincipal;
-    }
-
-    public void setAlimentoPrincipal(String alimentoPrincipal) {
-        this.alimentoPrincipal = alimentoPrincipal;
-    }
     
     
-
 }
+
+
