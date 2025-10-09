@@ -6,7 +6,7 @@ package com.uDistrital.avanzada.parcialUno.control;
 
 /**Encargado de iniciar el programa
  *
- * @author Alex
+ * @author Alex, jeison
  */
 public class Launcher {
     
