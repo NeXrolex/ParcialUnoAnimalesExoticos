@@ -4,10 +4,22 @@
  */
 package com.uDistrital.avanzada.parcialUno.modelo;
 
+import com.uDistrital.avanzada.parcialUno.modelo.interfaces.IConexion;
+
 /**
  *
- * @author jeiso
+ * @author jeison, Alex
  */
-public class ArchivoProperties {
+public class ArchivoProperties implements IConexion {
+
+    @Override
+    public void conectar() throws Exception {
+        
+    }
+
+    @Override
+    public void desconectar() throws Exception {
+        
+    }
     
 }

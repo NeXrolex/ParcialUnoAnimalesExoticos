@@ -26,6 +26,10 @@ public class ConexionBaseDatos implements IConexion {
     private Connection cn;
 
     @Override
+    /**
+     * Conectar con la base datos
+     * 
+     */
     public void conectar() throws Exception {
         //Si ya esta abierto no reabrir
         if (cn != null && !cn.isClosed()) {
@@ -37,6 +41,9 @@ public class ConexionBaseDatos implements IConexion {
     }
 
     @Override
+    /**
+     * Desconecta de la base datos
+     */
     public void desconectar() throws Exception {
         if (cn != null) {
             try {
