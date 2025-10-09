@@ -4,16 +4,12 @@
  */
 package com.uDistrital.avanzada.parcialUno.control;
 
-/**Encargado de iniciar el programa
+/**
  *
  * @author Alex
  */
-public class Launcher {
+public class ControlGeneral {
     
-    public static void main(String[] arg){
-        
-        new ControlGeneral();
-        
-    }
+    private ControlVista cVista;
     
 }
