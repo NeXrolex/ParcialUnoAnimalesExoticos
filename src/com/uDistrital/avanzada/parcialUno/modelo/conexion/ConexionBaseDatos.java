@@ -33,10 +33,11 @@ public class ConexionBaseDatos{
                 System.out.println("No se puede cargar el controlado");
             }
             return cn;
+        }
 
 
         public static void desconectar() {
-            cn = null;
-        }
+        cn = null;
+    }
 
 }
