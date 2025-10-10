@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  *
@@ -25,9 +26,9 @@ public class MascotaDAO {
         st = null;
         rs = null;
     }
-    public MascotaVO consultarMascota(String codigo) {
+    public MascotaVO consultarMascotaApodo(String apodo) {
         MascotaVO mascota = null;
-        String consulta = "SELECT * FROM estudiantes where codigo='" + codigo + "'";
+        String consulta = "SELECT * FROM mascotas where apodo='" + apodo + "'";
         try {
             con = (Connection) ConexionBaseDatos.getConexion();
             st = con.createStatement();
@@ -40,8 +41,7 @@ public class MascotaDAO {
                 mascota.setFamilia(rs.getString("familia"));
                 mascota.setGenero(rs.getString("genero"));
                 mascota.setEspecie(rs.getString("especie"));
-                mascota.setAlimentoPrincipal("alimentoPrincipal");
-                
+                mascota.setAlimentoPrincipal("alimentoPrincipal");                
             }
             st.close();
             ConexionBaseDatos.desconectar();
@@ -49,5 +49,30 @@ public class MascotaDAO {
             System.out.println("No se pudo realizar la consulta");
         }
         return mascota;
+    }
+    public ArrayList<MascotaVO> listaDeMascotas() {
+        ArrayList<MascotaVO> misMascotas = new ArrayList<MascotaVO>();
+        String consulta = "SELECT * FROM estudiantes";
+        try {
+            con = ConexionBaseDatos.getConexion();
+            st = con.createStatement();
+            rs = st.executeQuery(consulta);
+            while (rs.next()) {
+                MascotaVO mascota = new MascotaVO();
+                mascota.setApodo(rs.getString("apodo"));
+                mascota.setNombreComun(rs.getString("nombre"));
+                mascota.setClasificacion(rs.getString("clasificacion"));
+                mascota.setFamilia(rs.getString("familia"));
+                mascota.setGenero(rs.getString("genero"));
+                mascota.setEspecie(rs.getString("especie"));
+                mascota.setAlimentoPrincipal("alimentoPrincipal");
+                misMascotas.add(mascota);
+            }
+            st.close();
+            ConexionBaseDatos.desconectar();
+        } catch (SQLException ex) {
+            System.out.println("No se pudo realizar la consulta");
+        }
+        return misMascotas;
     }
 }
