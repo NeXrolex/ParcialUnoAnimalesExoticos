@@ -25,16 +25,33 @@ public class ConexionBaseDatos{
     //Referencia para nuestra conexion
     private static Connection cn = null;
 
-    public static Connection getConexion() {
-        try {
-            cn = DriverManager.getConnection(URLBD, usuario, contrasena);
-        } catch (SQLException ex) {            
-            System.out.println("No se puede cargar el controlado");
+    @Override
+    /**
+     * Conectar con la base datos
+     * 
+     */
+    public void conectar() throws Exception {
+        //Si ya esta abierto no reabrir
+        if (cn != null && !cn.isClosed()) {
+            return;
         }
         return cn;
     }
 
-    public static void desconectar() {
-        cn = null;
+    @Override
+    /**
+     * Desconecta de la base datos
+     */
+    public void desconectar() throws Exception {
+        if (cn != null) {
+            try {
+                if (!cn.isClosed()) {
+                    cn.close();
+                }
+            } finally {
+                cn = null;
+            }
+        }
+
     }
 }
