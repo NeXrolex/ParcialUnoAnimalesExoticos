@@ -25,16 +25,16 @@ public class ConexionBaseDatos{
     //Referencia para nuestra conexion
     private static Connection cn = null;
 
-    public static Connection getConexion() {
-        try {
-            cn = DriverManager.getConnection(URLBD, usuario, contrasena);
-        } catch (SQLException ex) {            
-            System.out.println("No se puede cargar el controlado");
+        public static Connection getConexion() {
+            try {
+                cn = DriverManager.getConnection(URLBD, usuario, contrasena);
+            } catch (SQLException ex) {            
+                System.out.println("No se puede cargar el controlado");
+            }
+            return cn;
         }
-        return cn;
-    }
 
-    public static void desconectar() {
-        cn = null;
-    }
+        public static void desconectar() {
+            cn = null;
+        }
 }
