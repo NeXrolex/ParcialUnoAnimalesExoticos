@@ -7,10 +7,46 @@ package com.uDistrital.avanzada.parcialUno.modelo;
 
 
 /**
+ * Clase encargada de manejar archivos de serilaizacion 
  *
- * @author jeiso
+ *
+ * @author jeison, Alex
  */
 public class ArchivoSerializacion {
+    //Referencia fisica del archivo
+    private File archivo;
+
+    /**
+    * Encargado de recibir la ruta del archivo y asignarala
+    *
+    * @param ruta Ruta de localizacion del archivo
+    */
+    public ArchivoSerializacion(String ruta){
+
+        this.archivo = new File(ruta);
+
+        if(!archivo.exists(){
+            archivo.createNewFile();
+            
+        }
+        
+    }
+
+    /**
+    * Encargado de abrir la escitura para selrializar objetos
+    * Para nuestra inplementacion solo necesitamos escribit
+    *
+    */
+    public ObjectOutputStream abrirEscritura() throws IOException{
+
+        return new ObjectOutputStream(
+            new FileOutputStream(archivo, false));
+        
+    } 
+
+    
+
+    
 
     
     
