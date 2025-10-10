@@ -12,9 +12,11 @@ package com.uDistrital.avanzada.parcialUno.modelo.interfaces;
 public interface ICreate<t> {
 
     /**
-    * Define los contratos para las operaciones de CREACION
-    *
-    */
+     * Contrato para insertar elementos
+     * 
+     * @param elemento Elemento a insertar
+     * @throws Exception Si ocurre algun error 
+     */
     public void insertar(t elemento) throws Exception;
     
 }

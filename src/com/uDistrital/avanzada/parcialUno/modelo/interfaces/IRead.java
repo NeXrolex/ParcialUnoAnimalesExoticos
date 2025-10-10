@@ -10,7 +10,13 @@ package com.uDistrital.avanzada.parcialUno.modelo.interfaces;
  */
 public interface IRead<t> {
     
-    public consultar(String dato) throws Exception;
+    /**
+     * Contrato para consultar datos 
+     * 
+     * @param dato Dato a consultar
+     * @throws Exception Si ocurre un error
+     */
+    public void consultar(String dato) throws Exception;
     
     
 }

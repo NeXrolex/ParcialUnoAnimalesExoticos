@@ -43,9 +43,9 @@ public class ConexionBaseDatos{
         }
 
         /**
-        Metodo utulizado para desconectar la base de datos
-        Su implementacion es importante para mas adelante hacer mas 
-        consultas desde otros apartados
+        * Metodo utulizado para desconectar la base de datos
+        * Su implementacion es importante para mas adelante hacer mas 
+        * consultas desde otros apartados
         */
         public static void desconectar() {
         cn = null;
