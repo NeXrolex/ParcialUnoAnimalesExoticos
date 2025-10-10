@@ -5,9 +5,16 @@
 package com.uDistrital.avanzada.parcialUno.modelo.interfaces;
 
 /**
+ * Interface que cubre la C del CRUD
  *
- * @author jeiso
+ * @author Alex
  */
-public interface ICreate {
+public interface ICreate<t> {
+
+    /**
+    * Define los contratos para las operaciones de CREACION
+    *
+    */
+    public void insertar(t elemento) throws Exception;
     
 }

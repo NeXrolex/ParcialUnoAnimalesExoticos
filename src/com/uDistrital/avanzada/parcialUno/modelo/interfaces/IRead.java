@@ -4,10 +4,13 @@
  */
 package com.uDistrital.avanzada.parcialUno.modelo.interfaces;
 
-/**
+/**Interface que implementa la R del CRUD 
  *
- * @author jeiso
+ * @author Alex 
  */
-public interface IRead {
+public interface IRead<t> {
+    
+    public consultar(String dato) throws Exception;
+    
     
 }
