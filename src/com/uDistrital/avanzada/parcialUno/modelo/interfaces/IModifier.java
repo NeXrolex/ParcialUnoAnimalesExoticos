@@ -20,7 +20,7 @@ public interface IModifier {
     /**
      * Contrato para eliminar una mascota
      * @param apodo identificador de la mascota a eliminar
-     * @throws Exception    
+     * @throws Exception  
      */
     void eliminar (String apodo) throws Exception;
 }
