@@ -25,7 +25,7 @@ public class ArchivoSerializacion {
 
         this.archivo = new File(ruta);
 
-        if(!archivo.exists(){
+        if(!archivo.exists(){ //Si no existe el archivo lo crea
             archivo.createNewFile();
             
         }
@@ -44,7 +44,11 @@ public class ArchivoSerializacion {
         
     } 
 
-    
+    public File getArchivo(){
+
+        return archivo;
+        
+    }    
 
     
 
