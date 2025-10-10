@@ -15,7 +15,8 @@ public class Animal {
     private String genero;
     private String especie;
     private String alimentoPrincipal;
-
+    public Animal(){}
+    
     public Animal(String nombreComun, String clasificacion, String familia, String genero, String especie, String alimentoPrincipal) {
         this.nombreComun = nombreComun;
         this.clasificacion = clasificacion;
