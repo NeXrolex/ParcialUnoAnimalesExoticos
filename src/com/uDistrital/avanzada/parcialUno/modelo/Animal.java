@@ -29,6 +29,7 @@ public class Animal {
      * @param especie Especie a la que pertenece el animal
      * @param alimentoPrincipal Aliemnto principal del animal
      */
+    public Animal (){}
     public Animal(String nombreComun, String clasificacion, String familia, String genero, String especie, String alimentoPrincipal) {
         this.nombreComun = nombreComun;
         this.clasificacion = clasificacion;

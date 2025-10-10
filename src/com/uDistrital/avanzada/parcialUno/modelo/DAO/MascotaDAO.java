@@ -75,4 +75,29 @@ public class MascotaDAO {
         }
         return misMascotas;
     }
+    public ArrayList<MascotaVO> buscarTipo(String letra) {
+        ArrayList<MascotaVO> misMascotas = new ArrayList<MascotaVO>();
+        String consulta = "SELECT * FROM estudiantes WHERE nombre LIKE '"+ letra+ "%'";
+        try {
+            con = ConexionBaseDatos.getConexion();
+            st = con.createStatement();
+            rs = st.executeQuery(consulta);
+            while (rs.next()) {
+                MascotaVO mascota = new MascotaVO();
+                mascota.setApodo(rs.getString("apodo"));
+                mascota.setNombreComun(rs.getString("nombre"));
+                mascota.setClasificacion(rs.getString("clasificacion"));
+                mascota.setFamilia(rs.getString("familia"));
+                mascota.setGenero(rs.getString("genero"));
+                mascota.setEspecie(rs.getString("especie"));
+                mascota.setAlimentoPrincipal("alimentoPrincipal");
+                misMascotas.add(mascota);
+            }
+            st.close();
+            ConexionBaseDatos.desconectar();
+        } catch (SQLException ex) {
+            System.out.println("No se pudo realizar la consulta");
+        }
+        return misMascotas;
+    }
 }
