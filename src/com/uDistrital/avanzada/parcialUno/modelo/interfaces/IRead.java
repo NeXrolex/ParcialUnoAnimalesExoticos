@@ -16,7 +16,7 @@ public interface IRead<t> {
      * @param dato Dato a consultar
      * @throws Exception Si ocurre un error
      */
-    public void consultar(String dato) throws Exception;
+    public t consultar(String dato) throws Exception;
     
     
 }
