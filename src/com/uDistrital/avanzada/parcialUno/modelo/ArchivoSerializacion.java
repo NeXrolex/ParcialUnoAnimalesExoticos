@@ -4,6 +4,11 @@
  */
 package com.uDistrital.avanzada.parcialUno.modelo;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+
 
 
 /**
@@ -21,11 +26,11 @@ public class ArchivoSerializacion {
     *
     * @param ruta Ruta de localizacion del archivo
     */
-    public ArchivoSerializacion(String ruta){
+    public ArchivoSerializacion(String ruta) throws IOException{
 
         this.archivo = new File(ruta);
 
-        if(!archivo.exists(){ //Si no existe el archivo lo crea
+        if(!archivo.exists()){ //Si no existe el archivo lo crea
             archivo.createNewFile();
             
         }
