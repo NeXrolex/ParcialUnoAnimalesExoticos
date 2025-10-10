@@ -27,6 +27,11 @@ public class MascotaVO extends Animal {
      * @param especie Especie a la que pertenece la mascota
      * @param alimentoPrincipal Alimento del cual se alimenta el animal *
      */
+    
+    public MascotaVO(){
+     
+    }
+    
     public MascotaVO(String apodo, String nombreComun, String clasificacion,
             String familia, String genero, String especie,
             String alimentoPrincipal) {

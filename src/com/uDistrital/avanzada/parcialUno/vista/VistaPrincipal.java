@@ -2,16 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.uDistrital.avanzada.parcialUno.modelo;
-
-
+package com.uDistrital.avanzada.parcialUno.vista;
 
 /**
  *
  * @author jeiso
  */
-public class ArchivoSerializacion {
-
-    
+public class VistaPrincipal {
     
 }
