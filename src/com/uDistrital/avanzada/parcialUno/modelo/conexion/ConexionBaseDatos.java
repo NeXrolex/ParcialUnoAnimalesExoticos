@@ -13,10 +13,9 @@ package com.uDistrital.avanzada.parcialUno.modelo.conexion;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import com.uDistrital.avanzada.parcialUno.modelo.interfaces.IConexion;
 //Implementa de nuestra interface IConexion
 
-public class ConexionBaseDatos implements IConexion {
+public class ConexionBaseDatos {
 
     //Configuraciones para el ingreso a la BD
     private static String URLBD = "jdbc:mysql://localhost:3007/mascotas";
@@ -25,35 +24,5 @@ public class ConexionBaseDatos implements IConexion {
     //Referencia para nuestra conexion
     private Connection cn;
 
-    @Override
-    /**
-     * Conectar con la base datos
-     * 
-     */
-    public void conectar() throws Exception {
-        //Si ya esta abierto no reabrir
-        if (cn != null && !cn.isClosed()) {
-            return;
-        }
-        //Conectamos a la base de datos
-        cn = DriverManager.getConnection(URLBD, usuario, contrasena);
-
-    }
-
-    @Override
-    /**
-     * Desconecta de la base datos
-     */
-    public void desconectar() throws Exception {
-        if (cn != null) {
-            try {
-                if (!cn.isClosed()) {
-                    cn.close();
-                }
-            } finally {
-                cn = null;
-            }
-        }
-
-    }
+    
 }

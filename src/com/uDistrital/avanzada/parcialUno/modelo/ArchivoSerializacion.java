@@ -4,21 +4,13 @@
  */
 package com.uDistrital.avanzada.parcialUno.modelo;
 
-import com.uDistrital.avanzada.parcialUno.modelo.interfaces.IConexion;
 
 /**
  *
  * @author jeiso
  */
-public class ArchivoSerializacion implements IConexion {
+public class ArchivoSerializacion  {
 
-    @Override
-    public void conectar() throws Exception {
-       
-    }
-
-    @Override
-    public void desconectar() throws Exception {
-    }
+    
     
 }
