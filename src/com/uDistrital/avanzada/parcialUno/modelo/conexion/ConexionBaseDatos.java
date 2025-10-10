@@ -25,6 +25,7 @@ public class ConexionBaseDatos{
     //Referencia para nuestra conexion
     private static Connection cn = null;
 
+
         public static Connection getConexion() {
             try {
                 cn = DriverManager.getConnection(URLBD, usuario, contrasena);
@@ -32,9 +33,10 @@ public class ConexionBaseDatos{
                 System.out.println("No se puede cargar el controlado");
             }
             return cn;
-        }
+
 
         public static void desconectar() {
             cn = null;
         }
+
 }
