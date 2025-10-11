@@ -36,7 +36,7 @@ public class MascotaDAO {
             if (rs.next()) {
                 mascota = new MascotaVO();
                 mascota.setApodo(rs.getString("apodo"));
-                mascota.setNombreComun(rs.getString("nombre"));
+                mascota.setNombreComun(rs.getString("nombreComun"));
                 mascota.setClasificacion(rs.getString("clasificacion"));
                 mascota.setFamilia(rs.getString("familia"));
                 mascota.setGenero(rs.getString("genero"));
