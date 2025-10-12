@@ -18,8 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Clase con Patron DAO encargada de cumplir todas las funciones con la base de 
+ * datos 
  *
- * @author Alex, Jeison
+ * @author Alex
  */
 public class MascotaDAO implements ICreate<MascotaVO>, IRead<MascotaVO>,
         IModifier {
@@ -276,9 +278,18 @@ public class MascotaDAO implements ICreate<MascotaVO>, IRead<MascotaVO>,
         }
         return out;
     }
-    
+    /**
+     * Funciona como puente entre sql  y los objetos 
+     * es privado porque su unica utilizacion es en esta clase
+     * 
+     * @param rs Cursor de resultado de la busqueda sql
+     * @return 
+     * @throws SQLException Si ocurre un error de conversion o es una fila
+     * que no corresponde al tipo 
+     */
     private MascotaVO map(ResultSet rs) throws SQLException {
         return new MascotaVO(
+                //Obtiene el valor de la columna y lo devuelve como un String
                 rs.getString(colApodo),
                 rs.getString(colNombreComun),
                 rs.getString(colClasificacion),
