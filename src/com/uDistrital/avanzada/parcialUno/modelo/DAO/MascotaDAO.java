@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Types;
 
 /**
  * Clase con Patron DAO encargada de cumplir todas las funciones con la base de 
@@ -168,16 +169,6 @@ public class MascotaDAO implements ICreate<MascotaVO>, IRead<MascotaVO>,
             ps.executeUpdate();
         }
     }
-
-    
-    /**
-     * Metodo privado que funciona como traductor de una fila en un
-     * objeto del dominio 
-     * 
-     * @param rs
-     * @return
-     * @throws SQLException 
-     */
     
     /*
     
@@ -300,4 +291,5 @@ public class MascotaDAO implements ICreate<MascotaVO>, IRead<MascotaVO>,
         );
         
     }
+    
 }
