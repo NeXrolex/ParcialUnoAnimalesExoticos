@@ -36,7 +36,7 @@ public class MascotaVO extends Animal {
             String familia, String genero, String especie,
             String alimentoPrincipal) {
         super(nombreComun, clasificacion, familia, genero, especie,
-                alimentoPrincipal);
+                alimentoPrincipal, alimentoPrincipal);
         this.apodo = apodo;
     }
 

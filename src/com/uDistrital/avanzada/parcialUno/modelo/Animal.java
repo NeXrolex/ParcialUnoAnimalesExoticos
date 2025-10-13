@@ -30,7 +30,7 @@ public class Animal {
      * @param alimentoPrincipal Aliemnto principal del animal
      */
     public Animal (){}
-    public Animal(String nombreComun, String clasificacion, String familia, String genero, String especie, String alimentoPrincipal) {
+    public Animal(String nombreComun, String clasificacion, String familia, String genero, String especie, String alimentoPrincipal, String alimentoPrincipal1) {
         this.nombreComun = nombreComun;
         this.clasificacion = clasificacion;
         this.familia = familia;

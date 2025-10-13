@@ -4,12 +4,18 @@
  */
 package com.uDistrital.avanzada.parcialUno.control;
 
+
+
 /**
  *
  * @author Alex
  */
 public class ControlGeneral {
     
+    private ControlProperties controlProperties;
+    
     private ControlVista cVista;
+    
+    
     
 }
