@@ -17,14 +17,14 @@ import java.util.Objects;
  */
 public class ControlSerializacion {
 
-    private final SerializacionDAO dao;
+    private final SerializacionDAO serDao;
 
     /**
      * Constructor por defecto: el control se autoabastece de su DAO.
      *
      */
     public ControlSerializacion() {
-        this.dao = new SerializacionDAO();
+        this.serDao = new SerializacionDAO();
     }
 
     /**
@@ -47,6 +47,6 @@ public class ControlSerializacion {
         ("La carpeta de destino no puede estar vacía.");
         }
         //Directoal dao para que cumpla su responsabilidad
-        dao.serializarEnRuta(lista, carpetaDestino.trim());
+        serDao.serializarEnRuta(lista, carpetaDestino.trim());
     }
 }
