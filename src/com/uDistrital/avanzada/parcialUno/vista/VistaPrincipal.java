@@ -359,6 +359,7 @@ public final class VistaPrincipal extends JFrame {
     public void setEspecie(String especie) {
         textoEspecie.setText(especie);
     }
+    
 
     // ========== GETTERS PARA LOS BOTONES ==========
     public JButton getBtnAdicionar() {

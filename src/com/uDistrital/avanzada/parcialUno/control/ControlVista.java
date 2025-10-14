@@ -72,36 +72,6 @@ public class ControlVista {
         vista.asignarListenerSalir(listenerSalir);
     }
 
-    // ==================== MÉTODOS PÚBLICOS ====================
-    
-    /**
-     * Muestra las mascotas incompletas y solicita completarlas
-     * 
-     * @param incompletas Lista de mascotas con datos faltantes
-     */
-    public void mostrarMascotasIncompletas(List<MascotaVO> incompletas) {
-        if (incompletas.isEmpty()) {
-            mostrarMensaje("Todas las mascotas están completas.");
-            return;
-        }
-        
-        StringBuilder mensaje = new StringBuilder();
-        mensaje.append("Se encontraron ").append(incompletas.size())
-               .append(" mascota(s) con datos incompletos:\n\n");
-        
-        for (MascotaVO m : incompletas) {
-            mensaje.append("• ").append(m.getApodo()).append(" - ");
-            mensaje.append(getCamposIncompletos(m)).append("\n");
-        }
-        
-        mostrarAdvertencia(mensaje.toString());
-        
-        // Solicitar completar cada mascota
-        for (MascotaVO mascota : incompletas) {
-            completarMascota(mascota);
-        }
-    }
-
     /**
      * Muestra un mensaje informativo en consola
      * 
@@ -137,52 +107,6 @@ public class ControlVista {
     public void mostrarInformacion(String mensaje) {
         vista.mostrarMensaje(mensaje, "Información", JOptionPane.INFORMATION_MESSAGE);
     }
-
-    // ==================== MÉTODOS PRIVADOS ====================
-    
-    /**
-     * Completa los datos faltantes de una mascota mediante diálogo
-     * 
-     * @param mascota Mascota incompleta
-     */
-    private void completarMascota(MascotaVO mascota) {
-        try {
-            // Cargar datos existentes en la vista
-            cargarDatosEnVista(mascota);
-            
-            String mensaje = String.format(
-                "Complete los datos faltantes para: %s\n" +
-                "Campos incompletos: %s",
-                mascota.getApodo(),
-                getCamposIncompletos(mascota)
-            );
-            
-            int opcion = JOptionPane.showConfirmDialog(
-                vista,
-                mensaje,
-                "Completar Mascota",
-                JOptionPane.OK_CANCEL_OPTION
-            );
-            
-            if (opcion == JOptionPane.OK_OPTION) {
-                // Obtener datos de la vista
-                actualizarMascotaDesdeVista(mascota);
-                
-                // Validar que ahora esté completa
-                if (validarMascotaCompleta(mascota)) {
-                    cGeneral.completarMascota(mascota);
-                    mostrarInformacion("Mascota completada exitosamente.");
-                    vista.limpiarCampos();
-                } else {
-                    mostrarError("La mascota sigue incompleta. Por favor complete todos los campos.");
-                    completarMascota(mascota); // Recursivo hasta completar
-                }
-            }
-        } catch (Exception e) {
-            mostrarError("Error al completar mascota: " + e.getMessage());
-        }
-    }
-
     /**
      * Carga los datos de una mascota en los campos de la vista
      * 
@@ -315,37 +239,7 @@ public class ControlVista {
         StringBuilder sb = new StringBuilder();
         sb.append("=== RESULTADOS (").append(mascotas.size()).append(" mascota(s)) ===\n\n");
         
-        for (MascotaVO m : mascotas) {
-            sb.append(formatearMascota(m)).append("\n");
-            sb.append("----------------------------------------\n");
-        }
-        
         vista.mostrarResultado(sb.toString());
-    }
-
-    /**
-     * Formatea los datos de una mascota para mostrar
-     * 
-     * @param mascota Mascota a formatear
-     * @return String formateado con los datos de la mascota
-     */
-    private String formatearMascota(MascotaVO mascota) {
-        return String.format(
-            "Apodo: %s\n" +
-            "Nombre Común: %s\n" +
-            "Clasificación: %s\n" +
-            "Familia: %s\n" +
-            "Género: %s\n" +
-            "Especie: %s\n" +
-            "Alimento Principal: %s",
-            mascota.getApodo(),
-            mascota.getNombreComun(),
-            mascota.getClasificacion(),
-            mascota.getFamilia(),
-            mascota.getGenero(),
-            mascota.getEspecie(),
-            mascota.getAlimentoPrincipal()
-        );
     }
 
     /**
@@ -358,7 +252,7 @@ public class ControlVista {
         return valor == null || valor.trim().isEmpty();
     }
 
-    // ==================== LISTENERS INTERNOS ====================
+    // listeners internos
     
     /**
      * Listener para el botón Adicionar

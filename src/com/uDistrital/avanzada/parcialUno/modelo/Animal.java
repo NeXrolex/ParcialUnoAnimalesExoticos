@@ -38,6 +38,7 @@ public class Animal {
         this.familia = familia;
         this.genero = genero;
         this.especie = especie;
+        this.alimentoPrincipal= alimentoPrincipal;
     }
 
     /**
@@ -130,11 +131,11 @@ public class Animal {
         this.especie = especie;
     }
 
-    /**
-     * Obtiene el alimento principal del animal.
-     *
-     * @return el alimento principal como String.
-     */
+    
+    public void setAlimentoPrincipal(String alimentoPrincipal) {
+        this.alimentoPrincipal = alimentoPrincipal;
+    }
+
     public String getAlimentoPrincipal() {
         return alimentoPrincipal;
     }
