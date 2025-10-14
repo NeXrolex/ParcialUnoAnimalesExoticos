@@ -42,9 +42,6 @@ public class ControlRAF {
             // El método guardarTodas LIMPIA el archivo y escribe todas las mascotas
             rafDAO.guardarTodas(mascotasBD);
             
-            System.out.println("✓ Estado de la BD guardado exitosamente en RAF");
-            System.out.println("✓ Total de mascotas guardadas: " + mascotasBD.size());
-            
         } catch (Exception e) {
             throw new Exception("Error al guardar estado de BD en RAF: " + e.getMessage());
         }

@@ -16,6 +16,13 @@ public class MascotaVO extends Animal {
     private String apodo; //Identificador especializado de un animal
 
     /**
+     * contructor vacio
+     */
+    public MascotaVO() {
+
+    }
+
+    /**
      * Constructor encargado de asignar los valores comunes de una mascota
      *
      *
