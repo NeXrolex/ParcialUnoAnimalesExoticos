@@ -32,10 +32,8 @@ public class ControlGeneral {
     }
 
     public void recibirMascotasCompletas(List<MascotaVO> incompletas) {
-    System.out.println("\nMascotas completadas correctamente:");
-    for (MascotaVO m : incompletas) {
-        System.out.println("- " + m.getApodo() + " (" + m.getEspecie() + ")");
+    
     }
-}
+
 
 }
