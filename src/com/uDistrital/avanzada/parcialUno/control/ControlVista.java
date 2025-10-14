@@ -29,14 +29,48 @@ public class ControlVista implements ActionListener {
         // En el futuro manejaremos botones, etc.
     }
 
-    public void mostrarMascotasIncompletas(List<MascotaVO> incompletas) {
+    public void adminMascotasIncompletas(List<MascotaVO> incompletas) {
         if (incompletas.isEmpty()) {
             vista.mostrarMensaje("Todas las mascotas estan completas.");
         } else {
             vista.mostrarMensaje("Se encontraron mascotas con datos incompletos:");
             for (MascotaVO m : incompletas) {
-                vista.mostrarMensaje("- " + m.getApodo() + " (" + m.getEspecie() + ")");
+                vista.mostrarMensaje("- " + m.getNombreComun());
             }
+            completarDatos(incompletas);
         }
+    }
+    private void completarDatos(List<MascotaVO> incompletas) {
+        for (MascotaVO m : incompletas) {
+            vista.mostrarMensaje("\n--- Completando datos de: " + m.getNombreComun() + " ---");
+
+            if (esVacio(m.getApodo())) {
+                m.setNombreComun(vista.leerDato("Ingrese el apodo: "));
+            }
+            if (esVacio(m.getClasificacion())) {
+                m.setClasificacion(vista.leerDato("Ingrese la clasificacion: "));
+            }
+            if (esVacio(m.getFamilia())) {
+                m.setFamilia(vista.leerDato("Ingrese la familia: "));
+            }
+            if (esVacio(m.getGenero())) {
+                m.setGenero(vista.leerDato("Ingrese el genero: "));
+            }
+            if (esVacio(m.getEspecie())) {
+                m.setEspecie(vista.leerDato("Ingrese la especie: "));
+            }
+            if (esVacio(m.getAlimentoPrincipal())) {
+                m.setAlimentoPrincipal(vista.leerDato("Ingrese el alimento principal: "));
+            }
+
+            vista.mostrarMensaje("Datos completados para " + m.getNombreComun()+" "+ m.getApodo());
+        }
+        vista.mostrarMensaje("datos almacenados correctamente");
+        // En este punto, las mascotas ya están completas en memoria
+        cGeneral.recibirMascotasCompletas(incompletas);
+    }
+
+    private boolean esVacio(String s) {
+        return s == null || s.trim().isEmpty();
     }
 }

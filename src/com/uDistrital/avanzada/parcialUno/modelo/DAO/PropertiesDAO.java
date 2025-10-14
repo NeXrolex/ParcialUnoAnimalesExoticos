@@ -104,21 +104,21 @@ public class PropertiesDAO implements IRead<MascotaVO> {
      */
     private MascotaVO construirMascota(Properties p, String base) {
         //lee los valores en cada campo
-        String apodo = safe(p.getProperty(base + "apodo"));
         String nombre = safe(p.getProperty(base + "nombreComun"));
+        String apodo = safe(p.getProperty(base + "apodo"));
         String clasificacion = safe(p.getProperty(base + "clasificacion"));
         String familia = safe(p.getProperty(base + "familia"));
         String genero = safe(p.getProperty(base + "genero"));
         String especie = safe(p.getProperty(base + "especie"));
-        String alimento = safe(p.getProperty(base + "AlimentoPrincipal"));
+        String alimento = safe(p.getProperty(base + "alimentoPrincipal"));
 
         /*Ese safe es de lo mas importante puesto que algunos campos van a
         estar vacios como indica el enunciado del parcial y no los toma 
         como Null sino que los convierte en cadenas vacias*/
         //Estos siguiendo el patron DAO
-        return new MascotaVO(
-                apodo,
+        return new MascotaVO(               
                 nombre,
+                apodo,
                 clasificacion,
                 familia,
                 genero,

@@ -18,16 +18,24 @@ public class ControlGeneral {
     private ControlVista cVista;
 
     public void iniciarPrograma() {
+        this.cProperties = new ControlProperties("src/data/mascotas.properties");
         VistaPrincipal vista = new VistaPrincipal();
         this.cVista = new ControlVista(vista, this);
-        this.cProperties = new ControlProperties("src/data/mascotas.properties");
+        
 
         // Cargar mascotas
         List<MascotaVO> mascotas = cProperties.cargarMascotas();
 
         // Verificar mascotas incompletas
         List<MascotaVO> incompletas = cProperties.obtenerMascotasIncompletas(mascotas);
-        cVista.mostrarMascotasIncompletas(incompletas);
+        cVista.adminMascotasIncompletas(incompletas);
     }
+
+    public void recibirMascotasCompletas(List<MascotaVO> incompletas) {
+    System.out.println("\nMascotas completadas correctamente:");
+    for (MascotaVO m : incompletas) {
+        System.out.println("- " + m.getApodo() + " (" + m.getEspecie() + ")");
+    }
+}
 
 }

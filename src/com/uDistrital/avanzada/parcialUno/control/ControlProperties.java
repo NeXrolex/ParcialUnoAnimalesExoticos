@@ -33,29 +33,11 @@ public class ControlProperties {
     public List<MascotaVO> cargarMascotas() {
         List<MascotaVO> listaFinal = new ArrayList<>();       
         try {
-//            System.out.println("-----PRUEBA-----");
-        List<MascotaVO> mascotas = dao.listarTodas();
-//        System.out.println("🐾 Mascotas cargadas desde DAO: " + mascotas.size());
-//        System.out.println("===== DEPURACIÓN: Datos cargados desde properties =====");
-//            for (MascotaVO m : mascotas) {
-//                
-//                System.out.println("Mascota: " + m.getApodo());
-//                System.out.println(" - Nombre: '" + m.getNombreComun()+ "'");
-//                System.out.println(" - Clasificación: '" + m.getClasificacion() + "'");
-//                System.out.println(" - Familia: '" + m.getFamilia() + "'");
-//                System.out.println(" - Género: '" + m.getGenero() + "'");
-//                System.out.println(" - Especie: '" + m.getEspecie() + "'");
-//                System.out.println(" - Alimento: '" + m.getAlimentoPrincipal() + "'");
-//                System.out.println("----------------------------------");
-//
-//                // Verificamos si hay campos incompletos
-//                if (tieneCamposIncompletos(m)) {
-//                    System.out.println("⚠ Mascota con datos incompletos detectada: " + m.getApodo());
-//                }
-//
-//                listaFinal.add(m);
-//            }
-//            System.out.println("========================================================");
+        List<MascotaVO> mascotas = dao.listarTodas();      
+            for (MascotaVO m : mascotas) {
+                listaFinal.add(m);
+            }
+            
     } catch (Exception e) {
         throw new RuntimeException("Error al cargar las mascotas desde Properties", e);
     }
