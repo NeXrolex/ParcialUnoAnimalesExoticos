@@ -19,10 +19,10 @@ import java.util.List;
 public class ControlAnimal {
 
     private final MascotaDAO masDao = new MascotaDAO();
-    
+
     /**
      * Registra una mascota en el sistema
-     * 
+     *
      * @param apodo Apodo de la mascota, identificador
      * @param nombreComun Nombre comun de la mascota
      * @param clasificacion Clasificacion de la mascota
@@ -38,29 +38,29 @@ public class ControlAnimal {
 
         validarApodo(apodo);
         //Convierte los datos primitivos en un objeto para manejarlo
-        Animal aVO = new MascotaVO(apodo, nombreComun, clasificacion, 
+        Animal aVO = new MascotaVO(apodo, nombreComun, clasificacion,
                 familia, genero, especie, alimentoPrincipal);
         //Damos la informacion al dao para que trabaje su responsabilidad 
         //de base de detos
         masDao.insertar((MascotaVO) aVO);
 
     }
-    
+
     /**
      * Permite hacer busquedas e mascotas por medio de su apodo
-     * 
+     *
      * @param apodo Identificador del animal
      * @return El animal encontrado
      * @throws Exception si ocurre un error al buscar la mascota
      */
-    public Animal consultar(String apodo) throws Exception{
+    public Animal consultar(String apodo) throws Exception {
         validarApodo(apodo);
         return masDao.consultar(apodo);
     }
-    
+
     /**
      * Se encarga de listar todos los animales disponibles
-     * 
+     *
      * @return Lista con todos las mascotas
      * @throws Exception Si ocurre un error al momento de listar
      */
@@ -70,9 +70,20 @@ public class ControlAnimal {
     }
     
     /**
-     * Modifica un animal en el sistema
+     * lISTA    de animales incompletos para completar
      * 
-     * @param apodo Apodo de la mascota 
+     * @return lista de animales incopletos
+     * @throws Exception error al conectarse al sql
+     */
+    public List<Animal> listarIncompletas() throws Exception {
+        // Delegamos al DAO y devolvemos como List<Animal>
+        return new ArrayList<>(masDao.listarIncompletas());
+    }
+
+    /**
+     * Modifica un animal en el sistema
+     *
+     * @param apodo Apodo de la mascota
      * @param nombreComun Nombre comun de la mascota
      * @param clasificacion Classificacion de la mascota
      * @param familia Familia de la madscota
@@ -83,7 +94,7 @@ public class ControlAnimal {
      */
     public void modificar(
             String apodo, String nombreComun, String clasificacion,
-            String familia, String genero, String especie, 
+            String familia, String genero, String especie,
             String alimentoPrincipal) throws Exception {
         validarApodo(apodo);
         MascotaVO vo = new MascotaVO(
@@ -91,10 +102,10 @@ public class ControlAnimal {
                 especie, alimentoPrincipal);
         masDao.modificar(vo);
     }
-    
+
     /**
      * Elimina una mascota del sistema
-     * 
+     *
      * @param apodo Apodo de la mascota(Identificador)
      * @throws Exception Si ocurre un error al eliminar la mascota
      */
@@ -102,46 +113,46 @@ public class ControlAnimal {
         validarApodo(apodo);
         masDao.eliminar(apodo);
     }
-    
+
     /**
      * Busqueda especialixada de un animal
-     * 
-     * @param clasificacion Clasificacion 
+     *
+     * @param clasificacion Clasificacion
      * @return Animales con esa clasificacion
      * @throws Exception Si ocurre un error al hacer busqueda
      */
-    public List<MascotaVO> consultarPorClasificacion(String clasificacion) 
+    public List<MascotaVO> consultarPorClasificacion(String clasificacion)
             throws Exception {
         return new ArrayList<>(masDao.consultarPorClasificacion(clasificacion));
     }
-    
+
     /**
      * Busqueda especialixada de un animal
-     * 
+     *
      * @param familia Familia de un animal
      * @return Animales con es famila en comun
      * @throws Exception Si ocurre un error al buscar un animal
      */
-    public List<MascotaVO> consultarPorFamilia(String familia) 
+    public List<MascotaVO> consultarPorFamilia(String familia)
             throws Exception {
         return new ArrayList<>(masDao.consultarPorFamilia(familia));
     }
-    
+
     /**
      * Busqueda especialixada de un animal
-     * 
+     *
      * @param tipoAlimento Tipo de alimento
-     * @return Animales on ese tipo de alimento en comun 
+     * @return Animales on ese tipo de alimento en comun
      * @throws Exception Si ocurre un error al buscar un animal
      */
-    public List<MascotaVO> consultarPorTipoAlimento(String tipoAlimento) 
+    public List<MascotaVO> consultarPorTipoAlimento(String tipoAlimento)
             throws Exception {
         return new ArrayList<>(masDao.consultarPorTipoAlimento(tipoAlimento));
     }
-    
+
     /**
      * Propio de la clase para validar que el identificador existe
-     * 
+     *
      * @param apodo Identificador de una mascota
      */
     private void validarApodo(String apodo) {
