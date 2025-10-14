@@ -22,14 +22,14 @@ import java.util.List;
 public class RAFDAO implements ICreate<MascotaVO>, IRead<List<MascotaVO>> {
 
     private ArchivoRandomAccessFile archivoRAF;
-    private static final String RUTA_ARCHIVO = "data/mascotas.dat";
+    private static final String rutaArchivo = "data/mascotas.dat";
 
     /**
      * Constructor que inicializa el archivo RAF
      */
     public RAFDAO() {
         try {
-            archivoRAF = new ArchivoRandomAccessFile(RUTA_ARCHIVO);
+            archivoRAF = new ArchivoRandomAccessFile(rutaArchivo);
         } catch (IOException e) {
             System.err.println("Error al inicializar RAFDAO: " + e.getMessage());
         }
@@ -142,25 +142,6 @@ public class RAFDAO implements ICreate<MascotaVO>, IRead<List<MascotaVO>> {
         }
 
         return mascotas;
-    }
-
-    /**
-     * Busca una mascota específica por su apodo
-     *
-     * @param apodo Apodo de la mascota a buscar
-     * @return MascotaVO si la encuentra, null si no existe
-     * @throws Exception Si ocurre un error al buscar
-     */
-    public MascotaVO buscarPorApodo(String apodo) throws Exception {
-        List<MascotaVO> todasLasMascotas = leerTodas();
-
-        for (MascotaVO mascota : todasLasMascotas) {
-            if (mascota.getApodo().equalsIgnoreCase(apodo)) {
-                return mascota;
-            }
-        }
-
-        return null; // No encontrada
     }
 
     /**
