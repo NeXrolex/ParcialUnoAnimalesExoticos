@@ -30,22 +30,10 @@ import javax.swing.JTextField;
  * Clase encargada de la vista del programa
  *
  * @author jeiso
- */
-public class VistaPrincipal {
-    private final Scanner scanner = new Scanner(System.in);
-
-    public void mostrarMensaje(String mensaje) {
-        System.out.println(mensaje);
-    }
-
-    public String leerDato(String mensaje) {
-        System.out.print(mensaje);
-        return scanner.nextLine();
-    }
-    
+*/
 public final class VistaPrincipal extends JFrame {
-
-    //paneles usados 
+    private final Scanner scanner = new Scanner(System.in);
+//paneles usados 
     private JPanel panelSuperior;
     private JPanel panelCentral;
     private JPanel panelFinal;
@@ -198,13 +186,13 @@ public final class VistaPrincipal extends JFrame {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         panel.setBackground(new Color(240, 240, 240));
 
-        btnAdicionar = crearBoton("Adicionar", new Color(34, 139, 34));
-        btnConsultar = crearBoton("Consultar", new Color(30, 144, 255));
-        btnModificar = crearBoton("Modificar", new Color(255, 140, 0));
-        btnEliminar = crearBoton("Eliminar", new Color(220, 20, 60));
-        btnSerializar = crearBoton("Serializar", new Color(138, 43, 226));
-        btnLimpiar = crearBoton("Limpiar", new Color(128, 128, 128));
-        btnSalir = crearBoton("Salir", new Color(0, 0, 0));
+        btnAdicionar = crearBoton("Adicionar");
+        btnConsultar = crearBoton("Consultar");
+        btnModificar = crearBoton("Modificar");
+        btnEliminar = crearBoton("Eliminar");
+        btnSerializar = crearBoton("Serializar");
+        btnLimpiar = crearBoton("Limpiar");
+        btnSalir = crearBoton("Salir");
 
         panel.add(btnAdicionar);
         panel.add(btnConsultar);
@@ -221,15 +209,10 @@ public final class VistaPrincipal extends JFrame {
      * Crea un botón con estilo personalizado
      *
      * @param texto Texto del botón
-     * @param color Color de fondo del botón
      * @return Botón configurado
      */
-    private JButton crearBoton(String texto, Color color) {
+    private JButton crearBoton(String texto) {
         JButton boton = new JButton(texto);
-        boton.setBackground(color);
-        boton.setForeground(Color.WHITE);
-        boton.setFont(new Font("Arial", Font.BOLD, 12));
-        boton.setFocusPainted(false);
         boton.setPreferredSize(new Dimension(110, 35));
         return boton;
     }
@@ -309,6 +292,14 @@ public final class VistaPrincipal extends JFrame {
      */
     public void mostrarMensaje(String mensaje, String titulo, int tipo) {
         JOptionPane.showMessageDialog(this, mensaje, titulo, tipo);
+    }
+    public void mostrarMensaje(String mensaje) {
+        System.out.println(mensaje);
+    }
+
+    public String leerDato(String mensaje) {
+        System.out.print(mensaje);
+        return scanner.nextLine();
     }
 
     // ========== GETTERS PARA LOS DATOS ==========
