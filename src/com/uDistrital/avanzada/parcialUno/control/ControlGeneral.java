@@ -11,13 +11,15 @@ import java.util.List;
 
 /**
  * Control general que orquesta toda la lógica del negocio
- * Coordina los diferentes controles especializados y gestiona el flujo principal
- * Patrón: Facade/Coordinator
+ * Coordina los diferentes controles especializados y gestiona el
+ * flujo principal
+ * 
  * 
  * @author Alex
  */
 public class ControlGeneral {
-
+    
+    //Conoce a todos sus controles cercanos
     private ControlProperties cProperties;
     private ControlVista cVista;
     private ControlRAF cRAF;
@@ -28,10 +30,14 @@ public class ControlGeneral {
      * Constructor que inicializa los controles especializados
      */
     public ControlGeneral() {
-        this.cProperties = new ControlProperties("src/data/mascotas.properties");
+        this.cProperties = new ControlProperties
+        ("src/data/mascotas.properties");//El profe nos menciono en clase que 
+        //para este podiamos quemar la ruta
         this.cRAF = new ControlRAF();
         this.cSerializacion = new ControlSerializacion();
         this.cAnimal = new ControlAnimal();
+        
+        iniciarPrograma();
     }
 
     /**

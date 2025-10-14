@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * DAO para manejo de archivo de acceso aleatorio
  *
- * @author jeiso, Alex
+ * @author jeiso
  */
 public class RAFDAO implements ICreate<MascotaVO>, IRead<List<MascotaVO>> {
 
@@ -31,7 +31,7 @@ public class RAFDAO implements ICreate<MascotaVO>, IRead<List<MascotaVO>> {
         try {
             archivoRAF = new ArchivoRandomAccessFile(rutaArchivo);
         } catch (IOException e) {
-            System.err.println("Error al inicializar RAFDAO: " + e.getMessage());
+            
         }
     }
 
@@ -57,7 +57,8 @@ public class RAFDAO implements ICreate<MascotaVO>, IRead<List<MascotaVO>> {
             raf.writeUTF(mascota.getAlimentoPrincipal());
 
         } catch (IOException e) {
-            throw new Exception("Error al insertar mascota en RAF: " + e.getMessage());
+            throw new Exception("Error al insertar mascota en RAF: " +
+                    e.getMessage());
         }
     }
 
@@ -79,7 +80,8 @@ public class RAFDAO implements ICreate<MascotaVO>, IRead<List<MascotaVO>> {
             }
 
         } catch (Exception e) {
-            throw new Exception("Error al guardar todas las mascotas: " + e.getMessage());
+            throw new Exception("Error al guardar todas las mascotas: " +
+                    e.getMessage());
         }
     }
 
@@ -138,7 +140,8 @@ public class RAFDAO implements ICreate<MascotaVO>, IRead<List<MascotaVO>> {
             }
 
         } catch (IOException e) {
-            throw new Exception("Error al leer mascotas del RAF: " + e.getMessage());
+            throw new Exception("Error al leer mascotas del RAF: " +
+                    e.getMessage());
         }
 
         return mascotas;
@@ -162,7 +165,8 @@ public class RAFDAO implements ICreate<MascotaVO>, IRead<List<MascotaVO>> {
         try {
             archivoRAF.limpiar();
         } catch (IOException e) {
-            throw new Exception("Error al limpiar archivo RAF: " + e.getMessage());
+            throw new Exception("Error al limpiar archivo RAF: " +
+                    e.getMessage());
         }
     }
 

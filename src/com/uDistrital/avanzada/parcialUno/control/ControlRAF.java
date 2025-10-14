@@ -10,83 +10,59 @@ import com.uDistrital.avanzada.parcialUno.modelo.MascotaVO;
 import java.util.List;
 
 /**
+ * Clase encargada del manejo del random access file 
+ * 
  *
- * @author santi
+ * @author santi, Alex
  */
 public class ControlRAF {
     private RAFDAO rafDAO;
-    private MascotaDAO mascotaDAO;
-
+    
+    /**
+     * Constructor que crea a su colaborador inmediato 
+     * 
+     */
      public ControlRAF() {
         this.rafDAO = new RAFDAO();
-        this.mascotaDAO = new MascotaDAO();
     }
     
     /**
-     * Guarda todas las mascotas de la BD en el archivo RAF
-     * Este método debe llamarse al finalizar el programa (botón SALIR)
+     * Determina si existen datos en el raf
      * 
-     * @throws Exception Si ocurre un error al guardar
+     * @return true or false depende el archivo
+     * @throws Exception Si ocurre un error de lectura
      */
-    public void guardarEstadoBDEnRAF() throws Exception {
-        try {
-            // 1. Obtener todas las mascotas de la base de datos
-            List<MascotaVO> mascotasBD = mascotaDAO.listarTodas();
-            
-            // 2. Validar que haya datos para guardar
-            if (mascotasBD == null || mascotasBD.isEmpty()) {
-                throw new Exception("No hay mascotas en la BD para guardar en RAF");
-            }
-            
-            // 3. Guardar todas las mascotas en el archivo RAF
-            // El método guardarTodas LIMPIA el archivo y escribe todas las mascotas
-            rafDAO.guardarTodas(mascotasBD);
-            
-        } catch (Exception e) {
-            throw new Exception("Error al guardar estado de BD en RAF: " + e.getMessage());
-        }
-    }
-    
-    /**
-     * Carga las mascotas desde el archivo RAF 
-     * Útil si quieres verificar qué se guardó
-     * 
-     * @return Lista de mascotas leídas desde el RAF
-     * @throws Exception Si ocurre un error al leer
-     */
-    public List<MascotaVO> cargarMascotasDesdeRAF() throws Exception {
-        try {
-            return rafDAO.leerTodas();
-        } catch (Exception e) {
-            throw new Exception("Error al cargar mascotas desde RAF: " + e.getMessage());
-        }
-    }
-    
-    /**
-     * Verifica si el archivo RAF tiene datos
-     * 
-     * @return true si el archivo contiene información
-     */
-    public boolean rafTieneDatos() {
+    public boolean tieneDisponible() throws Exception {
         return rafDAO.tieneDatos();
     }
-    
+
     /**
-     * Limpia todo el contenido del archivo RAF
+     * Lee todas las mascotas disponibles para el momento en el raf
      * 
-     * @throws Exception Si ocurre un error al limpiar
+     * @return Mascotas en el raf
+     * @throws Exception Si ocurre un error de lectura
      */
-    public void limpiarRAF() throws Exception {
-        rafDAO.limpiar();
+    public List<MascotaVO> leerTodas() throws Exception {
+        return rafDAO.leerTodas();
     }
-    
+
     /**
-     * obtiene el tamaño del archivo
+     * Guarda todas las mascotas 
      * 
-     * @return Tamaño en bytes
+     * @param mascotas Mascotas a cuardar
+     * @throws Exception Si ocurre un error con el archivo
      */
-    public long obtenerTamanioRAF() {
-        return rafDAO.obtenerTamanio();
+    public void guardarTodas(List<MascotaVO> mascotas) throws Exception {
+        rafDAO.guardarTodas(mascotas);
+    }
+
+    /**
+     * Limpia el archivo actual
+     * Funcional para sobreescribir de manera mas limpia
+     * @throws Exception 
+     */
+    public void limpiar() throws Exception {
+        rafDAO.limpiar();
     }
     
     
