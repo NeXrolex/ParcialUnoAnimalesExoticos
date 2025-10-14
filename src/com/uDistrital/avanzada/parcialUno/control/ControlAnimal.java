@@ -64,7 +64,7 @@ public class ControlAnimal {
      * @return Lista con todos las mascotas
      * @throws Exception Si ocurre un error al momento de listar
      */
-    public List<Animal> listarTodas() throws Exception {
+    public List<MascotaVO> listarTodas() throws Exception {
         List<MascotaVO> hijos = masDao.listarTodas();
         return new ArrayList<>(hijos); // copia para exponer como List<Animal>
     }
@@ -110,7 +110,7 @@ public class ControlAnimal {
      * @return Animales con esa clasificacion
      * @throws Exception Si ocurre un error al hacer busqueda
      */
-    public List<Animal> consultarPorClasificacion(String clasificacion) 
+    public List<MascotaVO> consultarPorClasificacion(String clasificacion) 
             throws Exception {
         return new ArrayList<>(masDao.consultarPorClasificacion(clasificacion));
     }
@@ -122,7 +122,7 @@ public class ControlAnimal {
      * @return Animales con es famila en comun
      * @throws Exception Si ocurre un error al buscar un animal
      */
-    public List<Animal> consultarPorFamilia(String familia) 
+    public List<MascotaVO> consultarPorFamilia(String familia) 
             throws Exception {
         return new ArrayList<>(masDao.consultarPorFamilia(familia));
     }
@@ -134,7 +134,7 @@ public class ControlAnimal {
      * @return Animales on ese tipo de alimento en comun 
      * @throws Exception Si ocurre un error al buscar un animal
      */
-    public List<Animal> consultarPorTipoAlimento(String tipoAlimento) 
+    public List<MascotaVO> consultarPorTipoAlimento(String tipoAlimento) 
             throws Exception {
         return new ArrayList<>(masDao.consultarPorTipoAlimento(tipoAlimento));
     }

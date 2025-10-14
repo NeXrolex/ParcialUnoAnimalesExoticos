@@ -19,7 +19,9 @@ public class Animal {
     private String especie;
     private String alimentoPrincipal;
 
-    /**
+    public Animal() {
+    }
+        /**
      * Constructor que asigna los valores con un animal
      *
      * @param nombreComun Nombre con el cual de conoce el animal
@@ -29,14 +31,13 @@ public class Animal {
      * @param especie Especie a la que pertenece el animal
      * @param alimentoPrincipal Aliemnto principal del animal
      */
-    public Animal (){}
-    public Animal(String nombreComun, String clasificacion, String familia, String genero, String especie, String alimentoPrincipal, String alimentoPrincipal1) {
+    public Animal(String nombreComun, String clasificacion, String familia,
+            String genero, String especie, String alimentoPrincipal) {
         this.nombreComun = nombreComun;
         this.clasificacion = clasificacion;
         this.familia = familia;
         this.genero = genero;
         this.especie = especie;
-        this.alimentoPrincipal = alimentoPrincipal;
     }
 
     /**
@@ -136,15 +137,6 @@ public class Animal {
      */
     public String getAlimentoPrincipal() {
         return alimentoPrincipal;
-    }
-
-    /**
-     * Establece el alimento principal del animal.
-     *
-     * @param alimentoPrincipal el alimento principal como String.
-     */
-    public void setAlimentoPrincipal(String alimentoPrincipal) {
-        this.alimentoPrincipal = alimentoPrincipal;
     }
 
 }
