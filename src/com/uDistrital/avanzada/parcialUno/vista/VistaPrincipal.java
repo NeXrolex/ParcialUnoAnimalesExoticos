@@ -4,6 +4,8 @@
  */
 package com.uDistrital.avanzada.parcialUno.vista;
 
+import java.util.Scanner;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -29,6 +31,18 @@ import javax.swing.JTextField;
  *
  * @author jeiso
  */
+public class VistaPrincipal {
+    private final Scanner scanner = new Scanner(System.in);
+
+    public void mostrarMensaje(String mensaje) {
+        System.out.println(mensaje);
+    }
+
+    public String leerDato(String mensaje) {
+        System.out.print(mensaje);
+        return scanner.nextLine();
+    }
+    
 public final class VistaPrincipal extends JFrame {
 
     //paneles usados 

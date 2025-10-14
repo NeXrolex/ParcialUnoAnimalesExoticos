@@ -32,7 +32,7 @@ public class MascotaVO extends Animal {
      
     }
     
-    public MascotaVO(String apodo, String nombreComun, String clasificacion,
+    public MascotaVO( String nombreComun,String apodo, String clasificacion,
             String familia, String genero, String especie,
             String alimentoPrincipal) {
         super(nombreComun, clasificacion, familia, genero, especie,

@@ -12,8 +12,8 @@ public class Launcher {
     
     public static void main(String[] arg){
         
-        new ControlGeneral();
-        
+        ControlGeneral controlGeneral = new ControlGeneral();
+        controlGeneral.iniciarPrograma();
     }
     
 }

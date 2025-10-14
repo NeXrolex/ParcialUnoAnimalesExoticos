@@ -29,7 +29,7 @@ public class PropertiesDAO implements IRead<MascotaVO> {
     public PropertiesDAO(String ruta) {
         this.archivo = new ArchivoProperties(ruta);
     }
-
+    
     @Override
     /**
      * Cumple el contrato de IRead
@@ -52,7 +52,7 @@ public class PropertiesDAO implements IRead<MascotaVO> {
         for (int i = 1;; i++) {
             /* no tiene techo porque pueden haber 
             mas registros*/
-            String base = "objeto" + i + ".";
+            String base = "mascota" + i + ".";
             String apodoActual = p.getProperty(base + "apodo");
             if (apodoActual == null) {
                 break; // no hay más registros
@@ -82,9 +82,10 @@ public class PropertiesDAO implements IRead<MascotaVO> {
         }
         //
         for (int i = 1;; i++) {
-            String base = "objeto" + i + ".";
-            if (p.getProperty(base + "apodo") == null) {
-                break; // secorta nuestro ciclo porque ya no hay mas mascotas
+            String base = "mascota" + i + ".";
+            if (p.getProperty(base + "apodo") == null && p.getProperty(base + "nombreComun") == null) {
+            // si ni apodo ni nombreComun existen, asumimos que ya no hay más registros
+            break; // secorta nuestro ciclo porque ya no hay mas mascotas
             }
             lista.add(construirMascota(p, base));/* trannsforma cada elemento 
             del properties en un objeto,segun la estructura DAO y lo anade
@@ -104,12 +105,12 @@ public class PropertiesDAO implements IRead<MascotaVO> {
     private MascotaVO construirMascota(Properties p, String base) {
         //lee los valores en cada campo
         String apodo = safe(p.getProperty(base + "apodo"));
-        String nombre = safe(p.getProperty(base + "nombre"));
+        String nombre = safe(p.getProperty(base + "nombreComun"));
         String clasificacion = safe(p.getProperty(base + "clasificacion"));
         String familia = safe(p.getProperty(base + "familia"));
         String genero = safe(p.getProperty(base + "genero"));
         String especie = safe(p.getProperty(base + "especie"));
-        String alimento = safe(p.getProperty(base + "tipoAlimento"));
+        String alimento = safe(p.getProperty(base + "AlimentoPrincipal"));
 
         /*Ese safe es de lo mas importante puesto que algunos campos van a
         estar vacios como indica el enunciado del parcial y no los toma 
@@ -135,5 +136,5 @@ public class PropertiesDAO implements IRead<MascotaVO> {
     private static String safe(String valor) {
         return valor == null ? "" : valor.trim();
     }
-
+    
 }
