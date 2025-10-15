@@ -22,6 +22,27 @@ public class ControlGeneral {
     //Conoce a todos sus controles cercanos
     private ControlProperties cProperties;
     private ControlVista cVista;
+    private final ControlAnimal cAnimal;
+
+    public ControlGeneral() {
+        this.cProperties = new ControlProperties("src/data/mascotas.properties");
+        VistaPrincipal vista = new VistaPrincipal();
+        this.cVista = new ControlVista(vista, this);
+        this.cAnimal = new ControlAnimal();
+    }    
+    public void iniciarPrograma() {
+        // Cargar mascotas
+        List<MascotaVO> mascotas = cProperties.cargarMascotas();
+
+        // Verificar mascotas incompletas
+        List<MascotaVO> incompletas = cProperties.obtenerMascotasIncompletas(mascotas);
+        
+        cVista.adminMascotasIncompletas(incompletas);       
+
+       cAnimal.procesarMascotas(mascotas, incompletas);
+    }
+
+
     private ControlRAF cRAF;
     private ControlSerializacion cSerializacion;
     private ControlAnimal cAnimal;
