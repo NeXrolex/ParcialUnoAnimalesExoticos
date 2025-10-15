@@ -16,6 +16,13 @@ public class MascotaVO extends Animal {
     private String apodo; //Identificador especializado de un animal
 
     /**
+     * contructor vacio
+     */
+    public MascotaVO() {
+
+    }
+
+    /**
      * Constructor encargado de asignar los valores comunes de una mascota
      *
      *
@@ -27,16 +34,9 @@ public class MascotaVO extends Animal {
      * @param especie Especie a la que pertenece la mascota
      * @param alimentoPrincipal Alimento del cual se alimenta el animal *
      */
-    
-    public MascotaVO(){
-     
-    }
-    
-    public MascotaVO( String nombreComun,String apodo, String clasificacion,
-            String familia, String genero, String especie,
-            String alimentoPrincipal) {
-        super(nombreComun, clasificacion, familia, genero, especie,
-                alimentoPrincipal, alimentoPrincipal);
+    public MascotaVO(String apodo, String nombreComun, String clasificacion,
+            String familia, String genero, String especie, String alimentoPrincipal) {
+        super(nombreComun, clasificacion, familia, genero, especie, alimentoPrincipal);
         this.apodo = apodo;
     }
 
@@ -56,6 +56,10 @@ public class MascotaVO extends Animal {
      */
     public void setApodo(String apodo) {
         this.apodo = apodo;
+    }
+
+    public void setAlimentoPrincipal(String alimento) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

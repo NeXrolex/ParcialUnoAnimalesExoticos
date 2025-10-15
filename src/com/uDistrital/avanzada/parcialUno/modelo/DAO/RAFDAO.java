@@ -17,21 +17,21 @@ import java.util.List;
 /**
  * DAO para manejo de archivo de acceso aleatorio
  *
- * @author jeiso, Alex
+ * @author jeiso
  */
 public class RAFDAO implements ICreate<MascotaVO>, IRead<List<MascotaVO>> {
 
     private ArchivoRandomAccessFile archivoRAF;
-    private static final String RUTA_ARCHIVO = "data/mascotas.dat";
+    private static final String rutaArchivo = "data/mascotas.dat";
 
     /**
      * Constructor que inicializa el archivo RAF
      */
     public RAFDAO() {
         try {
-            archivoRAF = new ArchivoRandomAccessFile(RUTA_ARCHIVO);
+            archivoRAF = new ArchivoRandomAccessFile(rutaArchivo);
         } catch (IOException e) {
-            System.err.println("Error al inicializar RAFDAO: " + e.getMessage());
+            
         }
     }
 
@@ -57,7 +57,8 @@ public class RAFDAO implements ICreate<MascotaVO>, IRead<List<MascotaVO>> {
             raf.writeUTF(mascota.getAlimentoPrincipal());
 
         } catch (IOException e) {
-            throw new Exception("Error al insertar mascota en RAF: " + e.getMessage());
+            throw new Exception("Error al insertar mascota en RAF: " +
+                    e.getMessage());
         }
     }
 
@@ -79,7 +80,8 @@ public class RAFDAO implements ICreate<MascotaVO>, IRead<List<MascotaVO>> {
             }
 
         } catch (Exception e) {
-            throw new Exception("Error al guardar todas las mascotas: " + e.getMessage());
+            throw new Exception("Error al guardar todas las mascotas: " +
+                    e.getMessage());
         }
     }
 
@@ -138,29 +140,11 @@ public class RAFDAO implements ICreate<MascotaVO>, IRead<List<MascotaVO>> {
             }
 
         } catch (IOException e) {
-            throw new Exception("Error al leer mascotas del RAF: " + e.getMessage());
+            throw new Exception("Error al leer mascotas del RAF: " +
+                    e.getMessage());
         }
 
         return mascotas;
-    }
-
-    /**
-     * Busca una mascota específica por su apodo
-     *
-     * @param apodo Apodo de la mascota a buscar
-     * @return MascotaVO si la encuentra, null si no existe
-     * @throws Exception Si ocurre un error al buscar
-     */
-    public MascotaVO buscarPorApodo(String apodo) throws Exception {
-        List<MascotaVO> todasLasMascotas = leerTodas();
-
-        for (MascotaVO mascota : todasLasMascotas) {
-            if (mascota.getApodo().equalsIgnoreCase(apodo)) {
-                return mascota;
-            }
-        }
-
-        return null; // No encontrada
     }
 
     /**
@@ -181,7 +165,8 @@ public class RAFDAO implements ICreate<MascotaVO>, IRead<List<MascotaVO>> {
         try {
             archivoRAF.limpiar();
         } catch (IOException e) {
-            throw new Exception("Error al limpiar archivo RAF: " + e.getMessage());
+            throw new Exception("Error al limpiar archivo RAF: " +
+                    e.getMessage());
         }
     }
 

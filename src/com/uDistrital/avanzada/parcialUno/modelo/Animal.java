@@ -12,14 +12,16 @@ package com.uDistrital.avanzada.parcialUno.modelo;
  */
 public class Animal {
 
-    private String nombreComun;
-    private String clasificacion;
-    private String familia;
-    private String genero;
-    private String especie;
-    private String alimentoPrincipal;
+    protected String nombreComun;
+    protected String clasificacion;
+    protected String familia;
+    protected String genero;
+    protected String especie;
+    protected String alimentoPrincipal;
 
-    /**
+    public Animal() {
+    }
+        /**
      * Constructor que asigna los valores con un animal
      *
      * @param nombreComun Nombre con el cual de conoce el animal
@@ -29,14 +31,14 @@ public class Animal {
      * @param especie Especie a la que pertenece el animal
      * @param alimentoPrincipal Aliemnto principal del animal
      */
-    public Animal (){}
-    public Animal(String nombreComun, String clasificacion, String familia, String genero, String especie, String alimentoPrincipal, String alimentoPrincipal1) {
+    public Animal(String nombreComun, String clasificacion, String familia,
+            String genero, String especie, String alimentoPrincipal) {
         this.nombreComun = nombreComun;
         this.clasificacion = clasificacion;
         this.familia = familia;
         this.genero = genero;
         this.especie = especie;
-        this.alimentoPrincipal = alimentoPrincipal;
+        this.alimentoPrincipal= alimentoPrincipal;
     }
 
     /**
@@ -129,22 +131,13 @@ public class Animal {
         this.especie = especie;
     }
 
-    /**
-     * Obtiene el alimento principal del animal.
-     *
-     * @return el alimento principal como String.
-     */
-    public String getAlimentoPrincipal() {
-        return alimentoPrincipal;
-    }
-
-    /**
-     * Establece el alimento principal del animal.
-     *
-     * @param alimentoPrincipal el alimento principal como String.
-     */
+    
     public void setAlimentoPrincipal(String alimentoPrincipal) {
         this.alimentoPrincipal = alimentoPrincipal;
+    }
+
+    public String getAlimentoPrincipal() {
+        return alimentoPrincipal;
     }
 
 }

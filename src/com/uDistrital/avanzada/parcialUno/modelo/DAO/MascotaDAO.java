@@ -16,10 +16,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Types;
 
 /**
+ * Clase con Patron DAO encargada de cumplir todas las funciones con la base de
+ * datos
  *
- * @author Alex, Jeison
+ * @author Alex
  */
 public class MascotaDAO implements ICreate<MascotaVO>, IRead<MascotaVO>,
         IModifier {
@@ -58,8 +61,8 @@ public class MascotaDAO implements ICreate<MascotaVO>, IRead<MascotaVO>,
         es importante po si despies queremos acceder a la Base de datos
         
          */
-        try (Connection c = ConexionBaseDatos.getConexion(); PreparedStatement 
-                ps = (PreparedStatement) /*Soporte para anadir
+        try (Connection c = ConexionBaseDatos.getConexion();
+                PreparedStatement ps = (PreparedStatement) /*Soporte para anadir
                         parametros a sql*/ c.prepareStatement(sql)) {
 
             ps.setString(1, mascota.getApodo());
@@ -85,49 +88,51 @@ public class MascotaDAO implements ICreate<MascotaVO>, IRead<MascotaVO>,
      */
     @Override
     public MascotaVO consultar(String apodo) throws Exception {
-        
+
         //
         final String sql = "SELECT * FROM " + TBL + " WHERE " + colApodo + "=?";
-        
+
+        /*
+        Cierra automaticante la conexion al salir del bloque, esto
+        es importante po si despies queremos acceder a la Base de datos  
+         */
+        try (Connection c = ConexionBaseDatos.getConexion();
+                PreparedStatement ps =
+                        (PreparedStatement) c.prepareStatement(sql)) {
+
+            // Establece el primer ? del sql
+            ps.setString(1, apodo);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next() ? map(rs) : null;
+                /*verificamos si existe una mascota 
+                con ese apodo*/
+            }
+        }
+    }
+
+    /**
+     * Modifica los datos de una mascota existente
+     *
+     * @param mascota Mascota con los nuevos valores
+     * @throws Exception Si ocurre un error de conexion
+     */
+    @Override
+    public void modificar(MascotaVO mascota) throws Exception {
+
+        final String sql = "UPDATE " + TBL + " SET "
+                + colNombreComun + "=?,"
+                + colClasificacion + "=?,"
+                + colFamilia + "=?,"
+                + colGenero + "=?,"
+                + colEspecie + "=?,"
+                + colAlimento + "=? "
+                + "WHERE " + colApodo + "=?";
         /*
         Cierra automaticante la conexion al salir del bloque, esto
         es importante po si despies queremos acceder a la Base de datos  
          */
         try (Connection c = ConexionBaseDatos.getConexion(); PreparedStatement
                 ps = (PreparedStatement) c.prepareStatement(sql)) {
-            
-            // Establece el primer ? del sql
-            ps.setString(1, apodo);
-            try (ResultSet rs = ps.executeQuery()) {
-                return rs.next() ? map(rs) : null; /*verificamos si existe una mascota 
-                con ese apodo*/
-            }
-        }
-    }
-    
-    /**
-     * Modifica los datos de una mascota existente
-     * 
-     * @param mascota Mascota con los nuevos valores
-     * @throws Exception Si ocurre un error de conexion
-     */
-    @Override
-    public void modificar(MascotaVO mascota) throws Exception {
-        
-         final String sql = "UPDATE " + TBL + " SET " +
-                colNombreComun   + "=?," +
-                colClasificacion + "=?," +
-                colFamilia + "=?," +
-                colGenero + "=?," +
-                colEspecie + "=?," +
-                colAlimento + "=? " +
-                "WHERE " + colApodo + "=?";
-         /*
-        Cierra automaticante la conexion al salir del bloque, esto
-        es importante po si despies queremos acceder a la Base de datos  
-         */
-        try (Connection c = ConexionBaseDatos.getConexion();
-             PreparedStatement ps = (PreparedStatement) c.prepareStatement(sql)) {
 
             ps.setString(1, mascota.getNombreComun());
             ps.setString(2, mascota.getClasificacion());
@@ -139,13 +144,12 @@ public class MascotaDAO implements ICreate<MascotaVO>, IRead<MascotaVO>,
 
             ps.executeUpdate();
         }
-    
 
     }
-    
+
     /**
      * Elimina una mascota, como antes mencionado por nuestra llave Apodo
-     * 
+     *
      * @param apodo Identificador de la mascota
      * @throws Exception Si ocurre un error de conexion
      */
@@ -153,36 +157,25 @@ public class MascotaDAO implements ICreate<MascotaVO>, IRead<MascotaVO>,
     public void eliminar(String apodo) throws Exception {
         //Sentencia final que funciona para eliminar de la bs
         final String sql = "DELETE FROM " + TBL + " WHERE " + colApodo + "=?";
-        
+
         /*
         Cierra automaticante la conexion al salir del bloque, esto
         es importante po si despies queremos acceder a la Base de datos  
          */
         try (Connection c = ConexionBaseDatos.getConexion();
-             PreparedStatement ps = (PreparedStatement)
-                     c.prepareStatement(sql)) {
+                PreparedStatement ps =
+                        (PreparedStatement) c.prepareStatement(sql)) {
 
             ps.setString(1, apodo);
             ps.executeUpdate();
         }
     }
 
-    
-    /**
-     * Metodo privado que funciona como traductor de una fila en un
-     * objeto del dominio 
-     * 
-     * @param rs
-     * @return
-     * @throws SQLException 
-     */
-    
     /*
     
     ---- De aui en adelante tenemos los especializdos del DAO para mascota ----
     
-    */
-    
+     */
     /**
      * Lista todas las mascotas, ordenadas por apodo.
      *
@@ -193,15 +186,16 @@ public class MascotaDAO implements ICreate<MascotaVO>, IRead<MascotaVO>,
         final String sql = "SELECT * FROM " + TBL + " ORDER BY " + colApodo;
 
         List<MascotaVO> out = new ArrayList<>();
-        try (Connection c = ConexionBaseDatos.getConexion();
-             Statement st = c.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
+        try (Connection c = ConexionBaseDatos.getConexion(); Statement st =
+                c.createStatement(); ResultSet rs = st.executeQuery(sql)) {
 
-            while (rs.next()) out.add(map(rs));
+            while (rs.next()) {
+                out.add(map(rs));
+            }
         }
         return out;
     }
-    
+
     /**
      * Consulta por clasificación (devuelve lista).
      *
@@ -209,19 +203,21 @@ public class MascotaDAO implements ICreate<MascotaVO>, IRead<MascotaVO>,
      * @return mascotas con esa clasificación.
      * @throws Exception si ocurre error de acceso a datos.
      */
-    public List<MascotaVO> consultarPorClasificacion(String clasificacion) 
+    public List<MascotaVO> consultarPorClasificacion(String clasificacion)
             throws Exception {
         final String sql = "SELECT * FROM " + TBL + " WHERE " + colClasificacion
                 + "=? ORDER BY " + colApodo;
 
         List<MascotaVO> out = new ArrayList<>();
         try (Connection c = ConexionBaseDatos.getConexion();
-             PreparedStatement ps = (PreparedStatement)
-                     c.prepareStatement(sql)) {
+                PreparedStatement ps =
+                        (PreparedStatement) c.prepareStatement(sql)) {
 
             ps.setString(1, clasificacion);
             try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) out.add(map(rs));
+                while (rs.next()) {
+                    out.add(map(rs));
+                }
             }
         }
         return out;
@@ -236,17 +232,19 @@ public class MascotaDAO implements ICreate<MascotaVO>, IRead<MascotaVO>,
      */
     public List<MascotaVO> consultarPorFamilia(String familia)
             throws Exception {
-        final String sql = "SELECT * FROM " + TBL + " WHERE " +
-                colFamilia + "=? ORDER BY " + colApodo;
+        final String sql = "SELECT * FROM " + TBL + " WHERE "
+                + colFamilia + "=? ORDER BY " + colApodo;
 
         List<MascotaVO> out = new ArrayList<>();
         try (Connection c = ConexionBaseDatos.getConexion();
-             PreparedStatement ps = (PreparedStatement)
-                     c.prepareStatement(sql)) {
+                PreparedStatement ps =
+                        (PreparedStatement) c.prepareStatement(sql)) {
 
             ps.setString(1, familia);
             try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) out.add(map(rs));
+                while (rs.next()) {
+                    out.add(map(rs));
+                }
             }
         }
         return out;
@@ -255,30 +253,70 @@ public class MascotaDAO implements ICreate<MascotaVO>, IRead<MascotaVO>,
     /**
      * Consulta por tipo de alimento (devuelve lista).
      *
-     * @param tipoAlimento valor exacto a filtrar 
+     * @param tipoAlimento valor exacto a filtrar
      * @return mascotas con ese tipo de alimento.
      * @throws Exception si ocurre error de acceso a datos.
      */
     public List<MascotaVO> consultarPorTipoAlimento(String tipoAlimento)
             throws Exception {
-        final String sql = "SELECT * FROM " + TBL + " WHERE " + colAlimento +
-                "=? ORDER BY " + colApodo;
+        final String sql = "SELECT * FROM " + TBL + " WHERE " + colAlimento
+                + "=? ORDER BY " + colApodo;
 
         List<MascotaVO> out = new ArrayList<>();
-        try (Connection c = ConexionBaseDatos.getConexion();
-             PreparedStatement ps = (PreparedStatement)
-                     c.prepareStatement(sql)) {
+        try (Connection c = ConexionBaseDatos.getConexion(); PreparedStatement
+                ps = (PreparedStatement) c.prepareStatement(sql)) {
 
             ps.setString(1, tipoAlimento);
             try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) out.add(map(rs));
+                while (rs.next()) {
+                    out.add(map(rs));
+                }
             }
         }
         return out;
     }
     
+    /**
+     * Consulta en la base de datos los datos incompletos
+     * 
+     * @return Lista con las mascotas incompletas
+     * @throws Exception 
+     */
+    public List<MascotaVO> listarIncompletas() throws Exception {
+        // Criterio: cualquier columna que este null
+        final String sql = "SELECT * FROM " + TBL + " WHERE "
+                + colNombreComun + " IS NULL OR "
+                + colClasificacion + " IS NULL OR "
+                + colFamilia + " IS NULL OR "
+                + colGenero + " IS NULL OR "
+                + colEspecie + " IS NULL OR "
+                + colAlimento + " IS NULL "
+                + "ORDER BY " + colApodo;
+
+        List<MascotaVO> out = new ArrayList<>();
+
+        try (Connection c = ConexionBaseDatos.getConexion(); Statement st =
+                c.createStatement(); ResultSet rs = st.executeQuery(sql)) {
+
+            while (rs.next()) {
+                out.add(map(rs)); // reutiliza tu mapper privado existente
+            }
+        }
+        return out;
+    }
+
+    /**
+     * Funciona como puente entre sql y los objetos es privado porque su unica
+     * utilizacion es en esta clase
+     *
+     * @param rs Cursor de resultado de la busqueda sql
+     * @return
+     * @throws SQLException Si ocurre un error de conversion o es una fila que
+     * no corresponde al tipo
+     */
     private MascotaVO map(ResultSet rs) throws SQLException {
         return new MascotaVO(
+                //Obtiene el valor de la columna y lo devuelve como un String
                 rs.getString(colApodo),
                 rs.getString(colNombreComun),
                 rs.getString(colClasificacion),
@@ -287,6 +325,7 @@ public class MascotaDAO implements ICreate<MascotaVO>, IRead<MascotaVO>,
                 rs.getString(colEspecie),
                 rs.getString(colAlimento)
         );
-        
+
     }
+
 }
