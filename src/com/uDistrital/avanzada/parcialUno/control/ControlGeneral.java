@@ -34,14 +34,20 @@ public final class ControlGeneral {
      * proyecto).
      */
     public ControlGeneral() {
-    this.cProperties    = new ControlProperties("D:\\Proyectos programacion\\Parcial1\\ParcialUnoAnimalesExoticos\\src\\data\\mascotas.properties");
-    this.cRAF           = new ControlRAF();
-    this.cSerializacion = new ControlSerializacion();
-    this.cAnimal        = new ControlAnimal();
+        this.cProperties = new ControlProperties("D:\\Proyectos programacion\\Parcial1\\ParcialUnoAnimalesExoticos\\src\\data\\mascotas.properties");
+        this.cRAF = new ControlRAF();
+        this.cSerializacion = new ControlSerializacion();
+        this.cAnimal = new ControlAnimal();
 
+<<<<<<< Updated upstream
     //ARRANQUE AUTOMÁTICO EN EL EDT Swing
     javax.swing.SwingUtilities.invokeLater(this::iniciarPrograma);
 }
+=======
+        // >>> ARRANQUE AUTOMÁTICO EN EL EDT (Swing) <<<
+        javax.swing.SwingUtilities.invokeLater(this::iniciarPrograma);
+    }
+>>>>>>> Stashed changes
 
     /**
      * Arranque del sistema. - Crea ControlVista (que a su vez crea y muestra la
@@ -63,22 +69,30 @@ public final class ControlGeneral {
     /* =================== Flujo de carga inicial =================== */
     private void flujoCargaInicial() {
         try {
-            
-            
+            if (cRAF.tieneDisponible()) {
+                List<MascotaVO> desdeRAF = cRAF.leerTodas();
+                if (desdeRAF != null && !desdeRAF.isEmpty()) {
+                    cargarMascotasABD(desdeRAF);
+                    cVista.mostrarMascotasIncompletas(desdeRAF);
+                    return;
+                }
+            }
+
             // Fallback a .properties: completar antes de habilitar el resto
             List<MascotaVO> desdeProp = cProperties.cargarTodas();
             if (desdeProp == null || desdeProp.isEmpty()) {
-                System.out.println("no se puede");
                 return;
             }
 
             List<MascotaVO> incompletas = cProperties.filtrarIncompletas(desdeProp);
             if (!incompletas.isEmpty()) {
-                cVista.mostrarMascotasIncompletas(incompletas); // aquí la vista pedirá datos y nos devolverá
+                cVista.mostrarMascotasIncompletas(incompletas);
             } else {
                 cargarMascotasABD(desdeProp);
             }
-        }catch (Exception e) { e.printStackTrace(); }
+        } catch (Exception e) {
+            // Manejo silencioso o delegar al control de vista si es crítico
+        }
     }
 
     /**
@@ -192,5 +206,18 @@ public final class ControlGeneral {
         List<MascotaVO> todas = listarTodasLasMascotas();
         cRAF.limpiar();                 // dejamos archivo limpio
         cRAF.guardarTodas(todas);       // persistimos todo el estado actual
+    }
+
+    public void sincronizarRAFConBD() throws Exception {
+        List<MascotaVO> todas = listarTodasLasMascotas(); // puede lanzar Exception
+        // Si no hay nada, opcionalmente no sobrescribimos el RAF (evita archivos vacíos)
+        if (todas == null || todas.isEmpty()) {
+            // opción: limpiar RAF si quieres que quede vacío
+            // cRAF.limpiar();
+            return;
+        }
+        // limpia el RAF y guarda todo el estado actual
+        cRAF.limpiar();
+        cRAF.guardarTodas(todas);
     }
 }

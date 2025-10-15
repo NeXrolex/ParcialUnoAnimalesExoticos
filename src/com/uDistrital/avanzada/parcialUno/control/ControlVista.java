@@ -402,4 +402,16 @@ public final class ControlVista implements ActionListener {
             }
         }
     }
+    public void pintarListaInicial(List<MascotaVO> mascotas) {
+    if (mascotas == null || mascotas.isEmpty()) {
+        vista.mostrarResultado("No hay mascotas cargadas.");
+    } else {
+        StringBuilder sb = new StringBuilder("=== Mascotas cargadas ("+mascotas.size()+") ===\n");
+        for (MascotaVO m : mascotas) {
+            sb.append("- ").append(m.getApodo()).append(" | ").append(m.getNombreComun()).append("\n");
+        }
+        vista.mostrarResultado(sb.toString());
+    }
+}
+
 }

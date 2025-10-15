@@ -59,7 +59,7 @@ public class MascotaVO extends Animal implements Serializable {
     }
 
     public void setAlimentoPrincipal(String alimento) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.alimentoPrincipal = alimento;
     }
 
 }

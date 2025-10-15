@@ -9,6 +9,7 @@ import com.uDistrital.avanzada.parcialUno.modelo.MascotaVO;
 import com.uDistrital.avanzada.parcialUno.modelo.interfaces.ICreate;
 import com.uDistrital.avanzada.parcialUno.modelo.interfaces.IRead;
 import java.io.EOFException;
+import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
@@ -29,9 +30,15 @@ public class RAFDAO implements ICreate<MascotaVO>, IRead<List<MascotaVO>> {
      */
     public RAFDAO() {
         try {
+            // Crear la carpeta data si no existe
+            File carpeta = new File("data");
+            if (!carpeta.exists()) {
+                carpeta.mkdirs();
+            }
+
             archivoRAF = new ArchivoRandomAccessFile(rutaArchivo);
         } catch (IOException e) {
-            
+            archivoRAF = null;
         }
     }
 
@@ -57,8 +64,8 @@ public class RAFDAO implements ICreate<MascotaVO>, IRead<List<MascotaVO>> {
             raf.writeUTF(mascota.getAlimentoPrincipal());
 
         } catch (IOException e) {
-            throw new Exception("Error al insertar mascota en RAF: " +
-                    e.getMessage());
+            throw new Exception("Error al insertar mascota en RAF: "
+                    + e.getMessage());
         }
     }
 
@@ -80,10 +87,11 @@ public class RAFDAO implements ICreate<MascotaVO>, IRead<List<MascotaVO>> {
             }
 
         } catch (Exception e) {
-            throw new Exception("Error al guardar todas las mascotas: " +
-                    e.getMessage());
+            throw new Exception("Error al guardar todas las mascotas: "
+                    + e.getMessage());
         }
     }
+    
 
     // ========== IMPLEMENTACIÓN DE IRead ==========
     /**
@@ -140,8 +148,8 @@ public class RAFDAO implements ICreate<MascotaVO>, IRead<List<MascotaVO>> {
             }
 
         } catch (IOException e) {
-            throw new Exception("Error al leer mascotas del RAF: " +
-                    e.getMessage());
+            throw new Exception("Error al leer mascotas del RAF: "
+                    + e.getMessage());
         }
 
         return mascotas;
@@ -153,6 +161,9 @@ public class RAFDAO implements ICreate<MascotaVO>, IRead<List<MascotaVO>> {
      * @return true si el archivo contiene información
      */
     public boolean tieneDatos() {
+        if (archivoRAF == null) {
+            return false;
+        }
         return archivoRAF.tieneDatos();
     }
 
@@ -165,8 +176,8 @@ public class RAFDAO implements ICreate<MascotaVO>, IRead<List<MascotaVO>> {
         try {
             archivoRAF.limpiar();
         } catch (IOException e) {
-            throw new Exception("Error al limpiar archivo RAF: " +
-                    e.getMessage());
+            throw new Exception("Error al limpiar archivo RAF: "
+                    + e.getMessage());
         }
     }
 
