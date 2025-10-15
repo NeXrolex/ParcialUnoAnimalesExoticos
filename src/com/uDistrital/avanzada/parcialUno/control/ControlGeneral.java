@@ -34,11 +34,14 @@ public final class ControlGeneral {
      * proyecto).
      */
     public ControlGeneral() {
-        this.cProperties = new ControlProperties("src/data/mascotas.properties");
-        this.cRAF = new ControlRAF();
-        this.cSerializacion = new ControlSerializacion();
-        this.cAnimal = new ControlAnimal();
-    }
+    this.cProperties    = new ControlProperties("src/data/mascotas.properties");
+    this.cRAF           = new ControlRAF();
+    this.cSerializacion = new ControlSerializacion();
+    this.cAnimal        = new ControlAnimal();
+
+    // >>> ARRANQUE AUTOMÁTICO EN EL EDT (Swing) <<<
+    javax.swing.SwingUtilities.invokeLater(this::iniciarPrograma);
+}
 
     /**
      * Arranque del sistema. - Crea ControlVista (que a su vez crea y muestra la

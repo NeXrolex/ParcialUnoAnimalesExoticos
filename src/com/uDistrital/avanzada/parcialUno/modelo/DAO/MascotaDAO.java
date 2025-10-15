@@ -28,7 +28,7 @@ public class MascotaDAO implements ICreate<MascotaVO>, IRead<MascotaVO>,
         IModifier {
 
     //Llevan en Col al inicio porque nos referimos a columnas de datos de sql
-    private static final String TBL = "mascotas"; //tabla sql(nombre de la tabla)
+    private static final String TBL = "animales"; //tabla sql(nombre de la tabla)
     private static final String colApodo = "apodo";//clave                
     private static final String colNombreComun = "nombreComun";
     private static final String colClasificacion = "clasificacion";
