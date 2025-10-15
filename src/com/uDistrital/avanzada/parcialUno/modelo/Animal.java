@@ -4,13 +4,15 @@
  */
 package com.uDistrital.avanzada.parcialUno.modelo;
 
+import java.io.Serializable;
+
 /**
  * Clase madre que representa a un animal contiene atributos comunes de un
  * animal
  *
  * @author jeison, Alex
  */
-public class Animal {
+public class Animal implements Serializable {
 
     protected String nombreComun;
     protected String clasificacion;

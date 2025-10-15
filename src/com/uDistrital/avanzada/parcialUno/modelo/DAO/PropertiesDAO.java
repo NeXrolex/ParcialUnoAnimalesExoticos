@@ -29,7 +29,7 @@ public class PropertiesDAO implements IRead<MascotaVO> {
     public PropertiesDAO(String ruta) {
         this.archivo = new ArchivoProperties(ruta);
     }
-    
+
     @Override
     /**
      * Cumple el contrato de IRead
@@ -64,12 +64,12 @@ public class PropertiesDAO implements IRead<MascotaVO> {
 
         return null; // no encontrada
     }
-    
+
     /**
-     * Metodo propio del DAo, convierte los bloques en obejtos ylos agrupa
-     * en una lista.
-     * 
-     * 
+     * Metodo propio del DAo, convierte los bloques en obejtos ylos agrupa en
+     * una lista.
+     *
+     *
      * @return Lista de mascotas cargadas desde properties
      * @throws Exception Si ocurre un error al abrir el archivo
      */
@@ -83,10 +83,9 @@ public class PropertiesDAO implements IRead<MascotaVO> {
         //
         for (int i = 1;; i++) {
             String base = "mascota" + i + ".";
-            if (p.getProperty(base + "apodo") == null && p.getProperty(base + 
-                    "nombreComun") == null) {
-            // si ni apodo ni nombreComun existen, asumimos que ya no hay más registros
-            break; // secorta nuestro ciclo porque ya no hay mas mascotas
+            if (p.getProperty(base + "apodo") == null && p.getProperty(base + "nombreComun") == null) {
+                // si ni apodo ni nombreComun existen, asumimos que ya no hay más registros
+                break; // secorta nuestro ciclo porque ya no hay mas mascotas
             }
             lista.add(construirMascota(p, base));/* trannsforma cada elemento 
             del properties en un objeto,segun la estructura DAO y lo anade
@@ -105,8 +104,8 @@ public class PropertiesDAO implements IRead<MascotaVO> {
      */
     private MascotaVO construirMascota(Properties p, String base) {
         //lee los valores en cada campo
-        String nombre = safe(p.getProperty(base + "nombreComun"));
         String apodo = safe(p.getProperty(base + "apodo"));
+        String nombreComun = safe(p.getProperty(base + "nombreComun"));
         String clasificacion = safe(p.getProperty(base + "clasificacion"));
         String familia = safe(p.getProperty(base + "familia"));
         String genero = safe(p.getProperty(base + "genero"));
@@ -117,9 +116,9 @@ public class PropertiesDAO implements IRead<MascotaVO> {
         estar vacios como indica el enunciado del parcial y no los toma 
         como Null sino que los convierte en cadenas vacias*/
         //Estos siguiendo el patron DAO
-        return new MascotaVO(               
-                nombre,
+        return new MascotaVO(
                 apodo,
+                nombreComun,
                 clasificacion,
                 familia,
                 genero,
@@ -137,5 +136,5 @@ public class PropertiesDAO implements IRead<MascotaVO> {
     private static String safe(String valor) {
         return valor == null ? "" : valor.trim();
     }
-    
+
 }

@@ -11,7 +11,7 @@ import java.io.Serializable;
  *
  * @author jeisoS,Alex
  */
-public class MascotaVO extends Animal {
+public class MascotaVO extends Animal implements Serializable {
 
     private String apodo; //Identificador especializado de un animal
 
