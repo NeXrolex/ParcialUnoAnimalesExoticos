@@ -12,12 +12,12 @@ package com.uDistrital.avanzada.parcialUno.modelo;
  */
 public class Animal {
 
-    private String nombreComun;
-    private String clasificacion;
-    private String familia;
-    private String genero;
-    private String especie;
-    private String alimentoPrincipal;
+    protected String nombreComun;
+    protected String clasificacion;
+    protected String familia;
+    protected String genero;
+    protected String especie;
+    protected String alimentoPrincipal;
 
     public Animal() {
     }

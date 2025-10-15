@@ -11,9 +11,8 @@ package com.uDistrital.avanzada.parcialUno.control;
 public class Launcher {
     
     public static void main(String[] arg){
-        
-        ControlGeneral controlGeneral = new ControlGeneral();
-        controlGeneral.iniciarPrograma();
+       //Jeison o santiago, solo esta linea de codigo(NO mas)
+       new ControlGeneral();
     }
     
 }

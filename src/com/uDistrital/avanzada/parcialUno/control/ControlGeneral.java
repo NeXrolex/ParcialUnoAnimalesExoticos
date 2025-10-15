@@ -11,15 +11,38 @@ import java.util.List;
 
 /**
  * Control general que orquesta toda la lógica del negocio
- * Coordina los diferentes controles especializados y gestiona el flujo principal
- * Patrón: Facade/Coordinator
+ * Coordina los diferentes controles especializados y gestiona el
+ * flujo principal
+ * 
  * 
  * @author Alex
  */
 public class ControlGeneral {
-
+    
+    //Conoce a todos sus controles cercanos
     private ControlProperties cProperties;
     private ControlVista cVista;
+    private final ControlAnimal cAnimal;
+
+    public ControlGeneral() {
+        this.cProperties = new ControlProperties("src/data/mascotas.properties");
+        VistaPrincipal vista = new VistaPrincipal();
+        this.cVista = new ControlVista(vista, this);
+        this.cAnimal = new ControlAnimal();
+    }    
+    public void iniciarPrograma() {
+        // Cargar mascotas
+        List<MascotaVO> mascotas = cProperties.cargarMascotas();
+
+        // Verificar mascotas incompletas
+        List<MascotaVO> incompletas = cProperties.obtenerMascotasIncompletas(mascotas);
+        
+        cVista.adminMascotasIncompletas(incompletas);       
+
+       cAnimal.procesarMascotas(mascotas, incompletas);
+    }
+
+
     private ControlRAF cRAF;
     private ControlSerializacion cSerializacion;
     private ControlAnimal cAnimal;
@@ -28,10 +51,14 @@ public class ControlGeneral {
      * Constructor que inicializa los controles especializados
      */
     public ControlGeneral() {
-        this.cProperties = new ControlProperties("src/data/mascotas.properties");
+        this.cProperties = new ControlProperties
+        ("src/data/mascotas.properties");//El profe nos menciono en clase que 
+        //para este podiamos quemar la ruta
         this.cRAF = new ControlRAF();
         this.cSerializacion = new ControlSerializacion();
         this.cAnimal = new ControlAnimal();
+        
+        iniciarPrograma();
     }
 
     /**

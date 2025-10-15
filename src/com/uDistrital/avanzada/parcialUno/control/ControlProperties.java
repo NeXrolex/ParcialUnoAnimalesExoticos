@@ -18,73 +18,52 @@ public class ControlProperties {
 
     private final PropertiesDAO dao;
 
-
-
     public ControlProperties(String rutaArchivo) {
         this.dao = new PropertiesDAO(rutaArchivo);
     }
 
     /**
-     * Carga las mascotas desde el archivo properties y completa los campos faltantes
-     * mediante el ControlVista (cuando esté implementado).
+     * Carga las mascotas desde el archivo properties y completa los campos
+     * faltantes mediante el ControlVista (cuando esté implementado).
      *
      * @return lista de mascotas con todos los datos completados
      */
     public List<MascotaVO> cargarMascotas() {
-        List<MascotaVO> listaFinal = new ArrayList<>();       
+        List<MascotaVO> listaFinal = new ArrayList<>();
         try {
-//            System.out.println("-----PRUEBA-----");
-        List<MascotaVO> mascotas = dao.listarTodas();
-//        System.out.println("🐾 Mascotas cargadas desde DAO: " + mascotas.size());
-//        System.out.println("===== DEPURACIÓN: Datos cargados desde properties =====");
-//            for (MascotaVO m : mascotas) {
-//                
-//                System.out.println("Mascota: " + m.getApodo());
-//                System.out.println(" - Nombre: '" + m.getNombreComun()+ "'");
-//                System.out.println(" - Clasificación: '" + m.getClasificacion() + "'");
-//                System.out.println(" - Familia: '" + m.getFamilia() + "'");
-//                System.out.println(" - Género: '" + m.getGenero() + "'");
-//                System.out.println(" - Especie: '" + m.getEspecie() + "'");
-//                System.out.println(" - Alimento: '" + m.getAlimentoPrincipal() + "'");
-//                System.out.println("----------------------------------");
-//
-//                // Verificamos si hay campos incompletos
-//                if (tieneCamposIncompletos(m)) {
-//                    System.out.println("⚠ Mascota con datos incompletos detectada: " + m.getApodo());
-//                }
-//
-//                listaFinal.add(m);
-//            }
-//            System.out.println("========================================================");
-    } catch (Exception e) {
-        throw new RuntimeException("Error al cargar las mascotas desde Properties", e);
-    }
+            List<MascotaVO> mascotas = dao.listarTodas();
+            for (MascotaVO m : mascotas) {
+                listaFinal.add(m);
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error al cargar las mascotas desde Properties", e);
+        }
         return listaFinal;
-    
+
     }
 
-
-    public List<MascotaVO> obtenerMascotasIncompletas(List<MascotaVO> lista) {
+    public List<MascotaVO> obtenerMascotasIncompletas(List<MascotaVO> listaFinal) {
         List<MascotaVO> incompletas = new ArrayList<>();
-        for (MascotaVO m : lista) {
+        for (MascotaVO m : listaFinal) {
             if (tieneCamposIncompletos(m)) {
                 incompletas.add(m);
             }
         }
         return incompletas;
     }
-    
+
     /**
-     * 
+     *
      */
     private boolean tieneCamposIncompletos(MascotaVO m) {
         return esVacio(m.getNombreComun())
-            || esVacio(m.getApodo())
-            || esVacio(m.getClasificacion())
-            || esVacio(m.getFamilia())
-            || esVacio(m.getGenero())
-            || esVacio(m.getEspecie())
-            || esVacio(m.getAlimentoPrincipal());
+                || esVacio(m.getApodo())
+                || esVacio(m.getClasificacion())
+                || esVacio(m.getFamilia())
+                || esVacio(m.getGenero())
+                || esVacio(m.getEspecie())
+                || esVacio(m.getAlimentoPrincipal());
     }
 
     private boolean esVacio(String s) {
