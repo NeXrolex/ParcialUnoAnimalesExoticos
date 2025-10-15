@@ -30,8 +30,9 @@ import javax.swing.JTextField;
  * Clase encargada de la vista del programa
  *
  * @author jeiso
-*/
+ */
 public final class VistaPrincipal extends JFrame {
+
     private final Scanner scanner = new Scanner(System.in);
 //paneles usados 
     private JPanel panelSuperior;
@@ -293,6 +294,7 @@ public final class VistaPrincipal extends JFrame {
     public void mostrarMensaje(String mensaje, String titulo, int tipo) {
         JOptionPane.showMessageDialog(this, mensaje, titulo, tipo);
     }
+
     public void mostrarMensaje(String mensaje) {
         System.out.println(mensaje);
     }
@@ -359,7 +361,6 @@ public final class VistaPrincipal extends JFrame {
     public void setEspecie(String especie) {
         textoEspecie.setText(especie);
     }
-    
 
     // ========== GETTERS PARA LOS BOTONES ==========
     public JButton getBtnAdicionar() {
@@ -388,6 +389,73 @@ public final class VistaPrincipal extends JFrame {
 
     public JButton getBtnSalir() {
         return btnSalir;
+    }
+
+    public void info(String mensaje) {
+        javax.swing.JOptionPane.showMessageDialog(this, mensaje, "Información", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public void error(String mensaje) {
+        javax.swing.JOptionPane.showMessageDialog(this, mensaje, "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void warn(String mensaje) {
+        javax.swing.JOptionPane.showMessageDialog(this, mensaje, "Advertencia", javax.swing.JOptionPane.WARNING_MESSAGE);
+    }
+
+    /**
+     * Retorna true si el usuario acepta.
+     */
+    public boolean confirmar(String mensaje) {
+        int r = javax.swing.JOptionPane.showConfirmDialog(this, mensaje, "Confirmar", javax.swing.JOptionPane.YES_NO_OPTION);
+        return r == javax.swing.JOptionPane.YES_OPTION;
+    }
+
+    /**
+     * Input modal simple; retorna null si cancela.
+     */
+    public String pedirDato(String prompt) {
+        return javax.swing.JOptionPane.showInputDialog(this, prompt);
+    }
+
+    /**
+     * JFileChooser encapsulado: retorna ruta de carpeta o null si se cancela.
+     */
+    public String elegirCarpetaSerializacion() {
+        javax.swing.JFileChooser fc = new javax.swing.JFileChooser();
+        fc.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
+        fc.setDialogTitle("Seleccione carpeta de destino");
+        int op = fc.showSaveDialog(this);
+        return (op == javax.swing.JFileChooser.APPROVE_OPTION) ? fc.getSelectedFile().getAbsolutePath() : null;
+    }
+
+// ====== ACTION COMMANDS (ajusta nombres de botones si los tuyos difieren) ======
+    public void asignarActionCommandAdicionar(String cmd) {
+        btnAdicionar.setActionCommand(cmd);
+    }
+
+    public void asignarActionCommandConsultar(String cmd) {
+        btnConsultar.setActionCommand(cmd);
+    }
+
+    public void asignarActionCommandModificar(String cmd) {
+        btnModificar.setActionCommand(cmd);
+    }
+
+    public void asignarActionCommandEliminar(String cmd) {
+        btnEliminar.setActionCommand(cmd);
+    }
+
+    public void asignarActionCommandSerializar(String cmd) {
+        btnSerializar.setActionCommand(cmd);
+    }
+
+    public void asignarActionCommandLimpiar(String cmd) {
+        btnLimpiar.setActionCommand(cmd);
+    }
+
+    public void asignarActionCommandSalir(String cmd) {
+        btnSalir.setActionCommand(cmd);
     }
 
 }
