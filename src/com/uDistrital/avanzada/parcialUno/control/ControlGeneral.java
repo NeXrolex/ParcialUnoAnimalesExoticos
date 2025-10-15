@@ -34,7 +34,7 @@ public final class ControlGeneral {
      * proyecto).
      */
     public ControlGeneral() {
-    this.cProperties    = new ControlProperties("src/data/mascotas.properties");
+    this.cProperties    = new ControlProperties("D:\\Proyectos programacion\\Parcial1\\ParcialUnoAnimalesExoticos\\src\\data\\mascotas.properties");
     this.cRAF           = new ControlRAF();
     this.cSerializacion = new ControlSerializacion();
     this.cAnimal        = new ControlAnimal();
@@ -63,16 +63,12 @@ public final class ControlGeneral {
     /* =================== Flujo de carga inicial =================== */
     private void flujoCargaInicial() {
         try {
-            if (cRAF.tieneDisponible()) {
-                List<MascotaVO> desdeRAF = cRAF.leerTodas();
-                if (desdeRAF != null && !desdeRAF.isEmpty()) {
-                    cargarMascotasABD(desdeRAF);
-                    return;
-                }
-            }
+            
+            
             // Fallback a .properties: completar antes de habilitar el resto
             List<MascotaVO> desdeProp = cProperties.cargarTodas();
             if (desdeProp == null || desdeProp.isEmpty()) {
+                System.out.println("no se puede");
                 return;
             }
 
@@ -82,8 +78,7 @@ public final class ControlGeneral {
             } else {
                 cargarMascotasABD(desdeProp);
             }
-        } catch (Exception ignored) {
-        }
+        }catch (Exception e) { e.printStackTrace(); }
     }
 
     /**
