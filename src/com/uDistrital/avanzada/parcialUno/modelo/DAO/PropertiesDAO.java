@@ -83,7 +83,8 @@ public class PropertiesDAO implements IRead<MascotaVO> {
         //
         for (int i = 1;; i++) {
             String base = "mascota" + i + ".";
-            if (p.getProperty(base + "apodo") == null && p.getProperty(base + "nombreComun") == null) {
+            if (p.getProperty(base + "apodo") == null && p.getProperty(base + 
+                    "nombreComun") == null) {
             // si ni apodo ni nombreComun existen, asumimos que ya no hay más registros
             break; // secorta nuestro ciclo porque ya no hay mas mascotas
             }

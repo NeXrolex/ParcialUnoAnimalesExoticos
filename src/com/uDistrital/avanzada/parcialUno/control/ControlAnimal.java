@@ -17,10 +17,14 @@ import java.util.List;
  * @author Alex
  */
 public class ControlAnimal {
-    private final MascotaDAO dao;
-
+    private final MascotaDAO masDao;
+    
+    /**
+     * Constructor por defecto que inicializa el dao de mascota 
+     * 
+     */
     public ControlAnimal() {
-        this.dao = new MascotaDAO();
+        this.masDao = new MascotaDAO();
     }
     /**
      * Recibe listas de mascotas (originales y completadas),
@@ -28,42 +32,55 @@ public class ControlAnimal {
      * @param mascotas
      * @param incompletas
      */
-    public void procesarMascotas(List<MascotaVO> mascotas, List<MascotaVO> incompletas) {
+    public void procesarMascotas(List<MascotaVO> mascotas,
+            List<MascotaVO> incompletas) {
         List<MascotaVO> listaPropBD = combinarListas(mascotas, incompletas);
         guardarMascotasEnBD(listaPropBD);
     }
     /**
      * Combina ambas listas, eliminando duplicados por apodo.
+     * 
+     * @param originales Lista de mascotas originales
+     * @param incompletas Lista de mascotas despues completas
+     * @return Nueva lista fusionada
      */
-    private List<MascotaVO> combinarListas(List<MascotaVO> originales, List<MascotaVO> incompletas) {
+    private List<MascotaVO> combinarListas(List<MascotaVO> originales,
+            List<MascotaVO> incompletas) {
         List<MascotaVO> resultado = new ArrayList<>(originales);
 
         for (MascotaVO m : incompletas) {
-            resultado.removeIf(x -> x.getNombreComun().equalsIgnoreCase(m.getNombreComun()));
+            resultado.removeIf(x -> x.getNombreComun().
+                    equalsIgnoreCase(m.getNombreComun()));
             resultado.add(m);
         }
         return resultado;
     }
+    
+    /**
+     * Guarda una lista de mascotas en la base de datos de forma segura.
+     * 
+     * @param listaPropBD Mascotas a guardar (puede venir de properties u
+     * otras fuentes).
+     */
     public void guardarMascotasEnBD(List<MascotaVO> listaPropBD) {
         for (MascotaVO m : listaPropBD) {
             try {
                 // Verifica si ya existe la mascota
-                MascotaVO existente = dao.consultar(m.getApodo());
+                MascotaVO existente = masDao.consultar(m.getApodo());
 
                 if (existente == null) {
-                    dao.insertar(m); // ✅ Si no existe, la insertamos
+                    masDao.insertar(m); 
                 } else {
-                    dao.modificar(m); // 🔁 Si ya existe, la actualizamos
+                    masDao.modificar(m); 
                 }
 
             } catch (Exception e) {
-                throw new RuntimeException("Error al guardar las mascotas en la Base de Datos", e);
+                throw new RuntimeException("Error al guardar las mascotas"
+                        + " en la Base de Datos", e);
             }
         }
     }
-
-    private final MascotaDAO masDao = new MascotaDAO();
-    
+  
     /**
      * Registra una mascota en el sistema
      * 
