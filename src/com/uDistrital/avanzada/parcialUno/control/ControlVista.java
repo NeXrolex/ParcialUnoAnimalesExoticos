@@ -45,7 +45,7 @@ public class ControlVista implements ActionListener {
             vista.mostrarMensaje("\n--- Completando datos de: " + m.getNombreComun() + " ---");
 
             if (esVacio(m.getApodo())) {
-                m.setNombreComun(vista.leerDato("Ingrese el apodo: "));
+                m.setApodo(vista.leerDato("Ingrese el apodo: "));
             }
             if (esVacio(m.getClasificacion())) {
                 m.setClasificacion(vista.leerDato("Ingrese la clasificacion: "));
@@ -67,7 +67,7 @@ public class ControlVista implements ActionListener {
         }
         vista.mostrarMensaje("datos almacenados correctamente");
         // En este punto, las mascotas ya están completas en memoria
-        cGeneral.recibirMascotasCompletas(incompletas);
+        
     }
 
     private boolean esVacio(String s) {

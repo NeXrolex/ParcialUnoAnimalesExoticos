@@ -18,55 +18,52 @@ public class ControlProperties {
 
     private final PropertiesDAO dao;
 
-
-
     public ControlProperties(String rutaArchivo) {
         this.dao = new PropertiesDAO(rutaArchivo);
     }
 
     /**
-     * Carga las mascotas desde el archivo properties y completa los campos faltantes
-     * mediante el ControlVista (cuando esté implementado).
+     * Carga las mascotas desde el archivo properties y completa los campos
+     * faltantes mediante el ControlVista (cuando esté implementado).
      *
      * @return lista de mascotas con todos los datos completados
      */
     public List<MascotaVO> cargarMascotas() {
-        List<MascotaVO> listaFinal = new ArrayList<>();       
+        List<MascotaVO> listaFinal = new ArrayList<>();
         try {
-        List<MascotaVO> mascotas = dao.listarTodas();      
+            List<MascotaVO> mascotas = dao.listarTodas();
             for (MascotaVO m : mascotas) {
                 listaFinal.add(m);
             }
-            
-    } catch (Exception e) {
-        throw new RuntimeException("Error al cargar las mascotas desde Properties", e);
-    }
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error al cargar las mascotas desde Properties", e);
+        }
         return listaFinal;
-    
+
     }
 
-
-    public List<MascotaVO> obtenerMascotasIncompletas(List<MascotaVO> lista) {
+    public List<MascotaVO> obtenerMascotasIncompletas(List<MascotaVO> listaFinal) {
         List<MascotaVO> incompletas = new ArrayList<>();
-        for (MascotaVO m : lista) {
+        for (MascotaVO m : listaFinal) {
             if (tieneCamposIncompletos(m)) {
                 incompletas.add(m);
             }
         }
         return incompletas;
     }
-    
+
     /**
-     * 
+     *
      */
     private boolean tieneCamposIncompletos(MascotaVO m) {
         return esVacio(m.getNombreComun())
-            || esVacio(m.getApodo())
-            || esVacio(m.getClasificacion())
-            || esVacio(m.getFamilia())
-            || esVacio(m.getGenero())
-            || esVacio(m.getEspecie())
-            || esVacio(m.getAlimentoPrincipal());
+                || esVacio(m.getApodo())
+                || esVacio(m.getClasificacion())
+                || esVacio(m.getFamilia())
+                || esVacio(m.getGenero())
+                || esVacio(m.getEspecie())
+                || esVacio(m.getAlimentoPrincipal());
     }
 
     private boolean esVacio(String s) {
