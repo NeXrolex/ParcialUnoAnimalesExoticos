@@ -19,14 +19,32 @@ import javax.swing.JOptionPane;
  * del usuario - Coordinar eventos de botones - Formatear datos para mostrar -
  * Gestionar diálogos de usuario
  *
+ * * <p>
+ * <b>Responsabilidades principales:</b></p>
+ * <ul>
+ * <li>Escuchar y responder a los eventos de la vista (botones y
+ * formularios).</li>
+ * <li>Validar entradas de usuario antes de enviarlas al controlador
+ * general.</li>
+ * <li>Invocar métodos del `ControlGeneral` para realizar operaciones CRUD y de
+ * serialización.</li>
+ * <li>Mostrar mensajes e información procesada a través de la vista.</li>
+ * <li>Coordinar el flujo de datos entre la vista y el modelo
+ * (`MascotaVO`).</li>
+ * </ul>
+ *
+ *
  * @author Alex
  */
 public final class ControlVista implements ActionListener {
 
+    /**
+     * Referencia a sus dos vecinos la interfaz grafica y logica del programa
+     */
     private final VistaPrincipal vista;
     private final ControlGeneral cGeneral;
-    
-    //importantes para cada una de las acciones del taller
+
+    /// --------------------------- COMANDOS DE ACCIÓN --------------------------- //
     private static final String CMD_ADICIONAR = "ADICIONAR";
     private static final String CMD_CONSULTAR = "CONSULTAR";
     private static final String CMD_MODIFICAR = "MODIFICAR";
@@ -36,8 +54,15 @@ public final class ControlVista implements ActionListener {
     private static final String CMD_SALIR = "SALIR";
 
     /**
+     * Constructor principal.
+     *
      * El ControlGeneral crea este controlador; aquí se crea y muestra la vista.
-     * Recibe la inyeccion del controlGneral 
+     * Recibe la inyeccion del controlGneral
+     *
+     * * <p>
+     * Inicializa la vista, registra los listeners y comandos asociados a cada
+     * acción de usuario.</p>
+     *
      */
     public ControlVista(ControlGeneral cGeneral) {
         this.cGeneral = cGeneral;
@@ -47,8 +72,8 @@ public final class ControlVista implements ActionListener {
     }
 
     /**
-     * 
-     * 
+     * Registra todos los listeners de botones de la vista y asigna los comandos
+     * de acción correspondientes.
      */
     private void registrarListenersYComandos() {
         // Listener único
@@ -70,6 +95,15 @@ public final class ControlVista implements ActionListener {
         vista.asignarActionCommandSalir(CMD_SALIR);
     }
 
+    /**
+     * Método principal de respuesta a eventos.
+     *
+     * <p>
+     * Evalúa el comando de acción del evento y ejecuta el método
+     * correspondiente (adicionar, consultar, etc.).</p>
+     *
+     * @param e evento capturado desde la interfaz gráfica.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand() == null ? "" : e.getActionCommand();
@@ -101,10 +135,22 @@ public final class ControlVista implements ActionListener {
     }
 
     /* =============================== helpers =============================== */
+    /**
+     * Verifica si una cadena es nula o vacía.
+     *
+     * @param s texto a evaluar.
+     * @return true si la cadena está vacía o solo contiene espacios.
+     */
     private boolean esVacio(String s) {
         return s == null || s.trim().isEmpty();
     }
 
+    /**
+     * Valida los campos obligatorios en la vista antes de procesar una acción.
+     *
+     * @return true si todos los campos requeridos están completos y false si de
+     * lo contrario aun faltan datos.
+     */
     private boolean validarObligatorios() {
         if (esVacio(vista.getApodo())) {
             vista.error("El apodo es obligatorio.");
@@ -129,6 +175,12 @@ public final class ControlVista implements ActionListener {
         return true;
     }
 
+    /**
+     * Muestra en la vista una lista formateada de mascotas.
+     *
+     * @param mascotas lista de {@link MascotaVO} a mostrar, permite refrescar
+     * la informacion visual que el usuario ve en pantalla.
+     */
     private void pintarLista(List<MascotaVO> mascotas) {
         if (mascotas == null || mascotas.isEmpty()) {
             vista.mostrarResultado("No se encontraron mascotas.");
@@ -148,6 +200,17 @@ public final class ControlVista implements ActionListener {
         vista.mostrarResultado(sb.toString());
     }
 
+    /**
+     * Carga los datos de una mascota en los campos de la vista.
+     *
+     * <p>
+     * Este método se utiliza principalmente después de una consulta individual,
+     * para que los datos del objeto {@link MascotaVO} aparezcan en los campos
+     * de texto del formulario, facilitando operaciones posteriores como la
+     * modificación o eliminación.</p>
+     *
+     * @param m Objeto {@link MascotaVO} cuyos datos serán cargados en la vista.
+     */
     private void cargarDatosEnVista(MascotaVO m) {
         if (m == null) {
             return;
@@ -169,6 +232,18 @@ public final class ControlVista implements ActionListener {
         }
     }
 
+    /**
+     * Determina qué campos de una mascota se encuentran vacíos o incompletos.
+     *
+     * <p>
+     * Devuelve una cadena que lista los nombres de los campos faltantes. Se
+     * utiliza para mostrar al usuario qué información debe completar antes de
+     * registrar o persistir los datos.</p>
+     *
+     * @param m Objeto {@link MascotaVO} a evaluar.
+     * @return Cadena con los nombres de los campos faltantes, separados por
+     * comas.
+     */
     private String camposFaltantes(MascotaVO m) {
         List<String> faltan = new ArrayList<>();
         if (esVacio(m.getApodo())) {
@@ -196,6 +271,24 @@ public final class ControlVista implements ActionListener {
     }
 
     /* =============================== flujo INCOMPLETAS =============================== */
+    /**
+     * Muestra y gestiona el flujo de mascotas con datos incompletos.
+     *
+     * <p>
+     * Este método cumple dos funciones:
+     * <ol>
+     * <li>Informa al usuario qué mascotas tienen información faltante,
+     * detallando los campos que deben completarse.</li>
+     * <li>Solicita los datos faltantes mediante la vista, actualiza los objetos
+     * y finalmente los envía al {@link ControlGeneral} para su registro o
+     * actualización definitiva.</li>
+     * </ol>
+     *
+     * Si no se detectan registros incompletos, muestra un mensaje
+     * informativo.</p>
+     *
+     * @param incompletas Lista de mascotas con información faltante.
+     */
     public void mostrarMascotasIncompletas(List<MascotaVO> incompletas) {
         if (incompletas == null || incompletas.isEmpty()) {
             vista.info("Todas las mascotas están completas.");
@@ -243,6 +336,14 @@ public final class ControlVista implements ActionListener {
     }
 
     /* ================================== handlers ================================== */
+    /**
+     * Acción asociada al botón **Adicionar**.
+     *
+     * <p>
+     * Valida los campos obligatorios y registra una nueva mascota en la base de
+     * datos mediante {@link ControlGeneral#registrarMascota}. Luego actualiza
+     * la vista mostrando todas las mascotas actuales.</p>
+     */
     private void onAdicionar() {
         try {
             if (!validarObligatorios()) {
@@ -265,6 +366,14 @@ public final class ControlVista implements ActionListener {
         }
     }
 
+    /**
+     * Acción asociada al botón **Consultar**.
+     *
+     * <p>
+     * Permite buscar mascotas por diferentes criterios (apodo, clasificación,
+     * familia o tipo de alimento). Si la búsqueda es individual, los datos se
+     * cargan en la vista.</p>
+     */
     private void onConsultar() {
         try {
             String criterio = vista.getCriterioConsulta();
@@ -303,6 +412,14 @@ public final class ControlVista implements ActionListener {
         }
     }
 
+    /**
+     * Acción asociada al botón **Modificar**.
+     *
+     * <p>
+     * Permite editar una mascota ya registrada. Solo se actualizan algunos
+     * campos (nombre, clasificación y alimento), mientras que familia, género y
+     * especie permanecen sin cambios.</p>
+     */
     private void onModificar() {
         try {
             if (!validarObligatorios()) {
@@ -338,6 +455,13 @@ public final class ControlVista implements ActionListener {
         }
     }
 
+    /**
+     * Acción asociada al botón **Eliminar**.
+     *
+     * <p>
+     * Elimina una mascota de la base de datos previa confirmación del usuario.
+     * Actualiza la lista visible después de la eliminación.</p>
+     */
     private void onEliminar() {
         try {
             String apodo = vista.getApodo();
@@ -365,6 +489,14 @@ public final class ControlVista implements ActionListener {
         }
     }
 
+    /**
+     * Acción asociada al botón **Serializar**.
+     *
+     * <p>
+     * Permite exportar los datos de mascotas a un archivo en la carpeta elegida
+     * por el usuario. Cumple el requisito de excluir el campo “alimento
+     * principal” del archivo serializado.</p>
+     */
     private void onSerializar() {
         try {
             String carpeta = vista.elegirCarpetaSerializacion();
@@ -379,12 +511,22 @@ public final class ControlVista implements ActionListener {
         }
     }
 
+    /**
+     * Limpia los campos de la vista y borra los resultados mostrados.
+     */
     private void onLimpiar() {
         vista.limpiarCampos();
         vista.mostrarResultado("");
         vista.info("Campos limpiados.");
     }
 
+    /**
+     * Cierra la aplicación guardando el estado actual en el archivo RAF.
+     *
+     * <p>
+     * Antes de salir, confirma la acción con el usuario y, en caso de error,
+     * permite forzar el cierre sin guardar.</p>
+     */
     private void onSalir() {
         try {
             boolean ok = vista.confirmar("¿Salir? Se guardará el estado actual en RAF.");
