@@ -39,7 +39,7 @@ public final class ControlGeneral {
     this.cSerializacion = new ControlSerializacion();
     this.cAnimal        = new ControlAnimal();
 
-    // >>> ARRANQUE AUTOMÁTICO EN EL EDT (Swing) <<<
+    //ARRANQUE AUTOMÁTICO EN EL EDT Swing
     javax.swing.SwingUtilities.invokeLater(this::iniciarPrograma);
 }
 

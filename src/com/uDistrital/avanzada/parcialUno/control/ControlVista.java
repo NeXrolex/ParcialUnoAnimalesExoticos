@@ -14,39 +14,42 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
- * Control de la vista - Maneja la lógica de presentación
- * Separa los eventos de la vista y coordina con ControlGeneral
- * Responsabilidades:
- * - Validar entradas del usuario
- * - Coordinar eventos de botones
- * - Formatear datos para mostrar
- * - Gestionar diálogos de usuario
- * 
+ * Control de la vista - Maneja la lógica de presentación Separa los eventos de
+ * la vista y coordina con ControlGeneral Responsabilidades: - Validar entradas
+ * del usuario - Coordinar eventos de botones - Formatear datos para mostrar -
+ * Gestionar diálogos de usuario
+ *
  * @author Alex
  */
 public final class ControlVista implements ActionListener {
 
     private final VistaPrincipal vista;
     private final ControlGeneral cGeneral;
-
-    private static final String CMD_ADICIONAR  = "ADICIONAR";
-    private static final String CMD_CONSULTAR  = "CONSULTAR";
-    private static final String CMD_MODIFICAR  = "MODIFICAR";
-    private static final String CMD_ELIMINAR   = "ELIMINAR";
+    
+    //importantes para cada una de las acciones del taller
+    private static final String CMD_ADICIONAR = "ADICIONAR";
+    private static final String CMD_CONSULTAR = "CONSULTAR";
+    private static final String CMD_MODIFICAR = "MODIFICAR";
+    private static final String CMD_ELIMINAR = "ELIMINAR";
     private static final String CMD_SERIALIZAR = "SERIALIZAR";
-    private static final String CMD_LIMPIAR    = "LIMPIAR";
-    private static final String CMD_SALIR      = "SALIR";
+    private static final String CMD_LIMPIAR = "LIMPIAR";
+    private static final String CMD_SALIR = "SALIR";
 
-    /** El ControlGeneral crea este controlador; aquí se crea y muestra la vista. */
+    /**
+     * El ControlGeneral crea este controlador; aquí se crea y muestra la vista.
+     * Recibe la inyeccion del controlGneral 
+     */
     public ControlVista(ControlGeneral cGeneral) {
         this.cGeneral = cGeneral;
         this.vista = new VistaPrincipal(); // no se cambia el layout existente
         registrarListenersYComandos();
-        this.vista.setVisible(true);
+        this.vista.setVisible(true);//Mostramos la vista
     }
 
-    /* ================================== wiring ================================== */
-
+    /**
+     * 
+     * 
+     */
     private void registrarListenersYComandos() {
         // Listener único
         vista.asignarListenerAdicionar(this);
@@ -71,27 +74,58 @@ public final class ControlVista implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand() == null ? "" : e.getActionCommand();
         switch (cmd) {
-            case CMD_ADICIONAR:  onAdicionar();  break;
-            case CMD_CONSULTAR:  onConsultar();  break;
-            case CMD_MODIFICAR:  onModificar();  break;
-            case CMD_ELIMINAR:   onEliminar();   break;
-            case CMD_SERIALIZAR: onSerializar(); break;
-            case CMD_LIMPIAR:    onLimpiar();    break;
-            case CMD_SALIR:      onSalir();      break;
-            default: /* no-op */ break;
+            case CMD_ADICIONAR:
+                onAdicionar();
+                break;
+            case CMD_CONSULTAR:
+                onConsultar();
+                break;
+            case CMD_MODIFICAR:
+                onModificar();
+                break;
+            case CMD_ELIMINAR:
+                onEliminar();
+                break;
+            case CMD_SERIALIZAR:
+                onSerializar();
+                break;
+            case CMD_LIMPIAR:
+                onLimpiar();
+                break;
+            case CMD_SALIR:
+                onSalir();
+                break;
+            default:
+                /* no-op */ break;
         }
     }
 
     /* =============================== helpers =============================== */
-
-    private boolean esVacio(String s) { return s == null || s.trim().isEmpty(); }
+    private boolean esVacio(String s) {
+        return s == null || s.trim().isEmpty();
+    }
 
     private boolean validarObligatorios() {
-        if (esVacio(vista.getApodo()))       { vista.error("El apodo es obligatorio."); return false; }
-        if (esVacio(vista.getNombreComun())) { vista.error("El nombre común es obligatorio."); return false; }
-        if (esVacio(vista.getFamilia()))     { vista.error("La familia es obligatoria."); return false; }
-        if (esVacio(vista.getGenero()))      { vista.error("El género es obligatorio."); return false; }
-        if (esVacio(vista.getEspecie()))     { vista.error("La especie es obligatoria."); return false; }
+        if (esVacio(vista.getApodo())) {
+            vista.error("El apodo es obligatorio.");
+            return false;
+        }
+        if (esVacio(vista.getNombreComun())) {
+            vista.error("El nombre común es obligatorio.");
+            return false;
+        }
+        if (esVacio(vista.getFamilia())) {
+            vista.error("La familia es obligatoria.");
+            return false;
+        }
+        if (esVacio(vista.getGenero())) {
+            vista.error("El género es obligatorio.");
+            return false;
+        }
+        if (esVacio(vista.getEspecie())) {
+            vista.error("La especie es obligatoria.");
+            return false;
+        }
         return true;
     }
 
@@ -104,39 +138,64 @@ public final class ControlVista implements ActionListener {
         sb.append("=== RESULTADOS (").append(mascotas.size()).append(") ===\n");
         for (MascotaVO m : mascotas) {
             sb.append("- ").append(m.getApodo()).append(" | ")
-              .append(m.getNombreComun()).append(" | ")
-              .append(m.getClasificacion()).append(" | ")
-              .append(m.getFamilia()).append(" | ")
-              .append(m.getGenero()).append(" | ")
-              .append(m.getEspecie()).append(" | ALIM: ")
-              .append(m.getAlimentoPrincipal()).append('\n');
+                    .append(m.getNombreComun()).append(" | ")
+                    .append(m.getClasificacion()).append(" | ")
+                    .append(m.getFamilia()).append(" | ")
+                    .append(m.getGenero()).append(" | ")
+                    .append(m.getEspecie()).append(" | ALIM: ")
+                    .append(m.getAlimentoPrincipal()).append('\n');
         }
         vista.mostrarResultado(sb.toString());
     }
 
     private void cargarDatosEnVista(MascotaVO m) {
-        if (m == null) return;
-        if (!esVacio(m.getApodo()))        vista.setApodo(m.getApodo());
-        if (!esVacio(m.getNombreComun()))  vista.setNombreComun(m.getNombreComun());
-        if (!esVacio(m.getFamilia()))      vista.setFamilia(m.getFamilia());
-        if (!esVacio(m.getGenero()))       vista.setGenero(m.getGenero());
-        if (!esVacio(m.getEspecie()))      vista.setEspecie(m.getEspecie());
+        if (m == null) {
+            return;
+        }
+        if (!esVacio(m.getApodo())) {
+            vista.setApodo(m.getApodo());
+        }
+        if (!esVacio(m.getNombreComun())) {
+            vista.setNombreComun(m.getNombreComun());
+        }
+        if (!esVacio(m.getFamilia())) {
+            vista.setFamilia(m.getFamilia());
+        }
+        if (!esVacio(m.getGenero())) {
+            vista.setGenero(m.getGenero());
+        }
+        if (!esVacio(m.getEspecie())) {
+            vista.setEspecie(m.getEspecie());
+        }
     }
 
     private String camposFaltantes(MascotaVO m) {
         List<String> faltan = new ArrayList<>();
-        if (esVacio(m.getApodo()))             faltan.add("Apodo");
-        if (esVacio(m.getNombreComun()))       faltan.add("Nombre");
-        if (esVacio(m.getClasificacion()))     faltan.add("Clasificación");
-        if (esVacio(m.getFamilia()))           faltan.add("Familia");
-        if (esVacio(m.getGenero()))            faltan.add("Género");
-        if (esVacio(m.getEspecie()))           faltan.add("Especie");
-        if (esVacio(m.getAlimentoPrincipal())) faltan.add("Alimento");
+        if (esVacio(m.getApodo())) {
+            faltan.add("Apodo");
+        }
+        if (esVacio(m.getNombreComun())) {
+            faltan.add("Nombre");
+        }
+        if (esVacio(m.getClasificacion())) {
+            faltan.add("Clasificación");
+        }
+        if (esVacio(m.getFamilia())) {
+            faltan.add("Familia");
+        }
+        if (esVacio(m.getGenero())) {
+            faltan.add("Género");
+        }
+        if (esVacio(m.getEspecie())) {
+            faltan.add("Especie");
+        }
+        if (esVacio(m.getAlimentoPrincipal())) {
+            faltan.add("Alimento");
+        }
         return String.join(", ", faltan);
     }
 
     /* =============================== flujo INCOMPLETAS =============================== */
-
     public void mostrarMascotasIncompletas(List<MascotaVO> incompletas) {
         if (incompletas == null || incompletas.isEmpty()) {
             vista.info("Todas las mascotas están completas.");
@@ -145,20 +204,34 @@ public final class ControlVista implements ActionListener {
         StringBuilder sb = new StringBuilder("Se encontraron mascotas con datos incompletos:\n");
         for (MascotaVO m : incompletas) {
             sb.append("- ").append(!esVacio(m.getNombreComun()) ? m.getNombreComun() : "(sin nombre)")
-              .append(" | faltantes: ").append(camposFaltantes(m)).append('\n');
+                    .append(" | faltantes: ").append(camposFaltantes(m)).append('\n');
         }
         vista.warn(sb.toString());
 
         // pedir datos faltantes a través de la vista
         for (MascotaVO m : incompletas) {
             vista.info("Completando: " + (!esVacio(m.getNombreComun()) ? m.getNombreComun() : "(sin nombre)"));
-            if (esVacio(m.getApodo()))             m.setApodo(vista.pedirDato("Ingrese el apodo: "));
-            if (esVacio(m.getNombreComun()))       m.setNombreComun(vista.pedirDato("Ingrese el nombre común: "));
-            if (esVacio(m.getClasificacion()))     m.setClasificacion(vista.pedirDato("Ingrese la clasificación: "));
-            if (esVacio(m.getFamilia()))           m.setFamilia(vista.pedirDato("Ingrese la familia: "));
-            if (esVacio(m.getGenero()))            m.setGenero(vista.pedirDato("Ingrese el género: "));
-            if (esVacio(m.getEspecie()))           m.setEspecie(vista.pedirDato("Ingrese la especie: "));
-            if (esVacio(m.getAlimentoPrincipal())) m.setAlimentoPrincipal(vista.pedirDato("Ingrese el alimento principal: "));
+            if (esVacio(m.getApodo())) {
+                m.setApodo(vista.pedirDato("Ingrese el apodo: "));
+            }
+            if (esVacio(m.getNombreComun())) {
+                m.setNombreComun(vista.pedirDato("Ingrese el nombre común: "));
+            }
+            if (esVacio(m.getClasificacion())) {
+                m.setClasificacion(vista.pedirDato("Ingrese la clasificación: "));
+            }
+            if (esVacio(m.getFamilia())) {
+                m.setFamilia(vista.pedirDato("Ingrese la familia: "));
+            }
+            if (esVacio(m.getGenero())) {
+                m.setGenero(vista.pedirDato("Ingrese el género: "));
+            }
+            if (esVacio(m.getEspecie())) {
+                m.setEspecie(vista.pedirDato("Ingrese la especie: "));
+            }
+            if (esVacio(m.getAlimentoPrincipal())) {
+                m.setAlimentoPrincipal(vista.pedirDato("Ingrese el alimento principal: "));
+            }
         }
 
         try {
@@ -170,10 +243,11 @@ public final class ControlVista implements ActionListener {
     }
 
     /* ================================== handlers ================================== */
-
     private void onAdicionar() {
         try {
-            if (!validarObligatorios()) return;
+            if (!validarObligatorios()) {
+                return;
+            }
             cGeneral.registrarMascota(
                     vista.getApodo(),
                     vista.getNombreComun(),
@@ -195,7 +269,10 @@ public final class ControlVista implements ActionListener {
         try {
             String criterio = vista.getCriterioConsulta();
             String valor = vista.getValorConsulta();
-            if (esVacio(valor)) { vista.error("Ingrese un valor para consultar."); return; }
+            if (esVacio(valor)) {
+                vista.error("Ingrese un valor para consultar.");
+                return;
+            }
 
             List<MascotaVO> resultados;
             switch (criterio) {
@@ -228,13 +305,20 @@ public final class ControlVista implements ActionListener {
 
     private void onModificar() {
         try {
-            if (!validarObligatorios()) return;
+            if (!validarObligatorios()) {
+                return;
+            }
             String apodo = vista.getApodo();
             MascotaVO existente = cGeneral.consultarMascota(apodo);
-            if (existente == null) { vista.error("No existe una mascota con ese apodo."); return; }
+            if (existente == null) {
+                vista.error("No existe una mascota con ese apodo.");
+                return;
+            }
 
             boolean ok = vista.confirmar("¿Modificar " + apodo + "?\nNOTA: No se cambia Familia/Género/Especie.");
-            if (!ok) return;
+            if (!ok) {
+                return;
+            }
 
             cGeneral.modificarMascota(
                     apodo,
@@ -248,7 +332,7 @@ public final class ControlVista implements ActionListener {
             vista.info("Mascota modificada.");
             MascotaVO actual = cGeneral.consultarMascota(apodo);
             pintarLista(actual != null ? java.util.Collections.singletonList(actual)
-                                       : java.util.Collections.emptyList());
+                    : java.util.Collections.emptyList());
         } catch (Exception ex) {
             vista.error("Error al modificar: " + ex.getMessage());
         }
@@ -257,12 +341,20 @@ public final class ControlVista implements ActionListener {
     private void onEliminar() {
         try {
             String apodo = vista.getApodo();
-            if (esVacio(apodo)) { vista.error("Ingrese o consulte el apodo a eliminar."); return; }
+            if (esVacio(apodo)) {
+                vista.error("Ingrese o consulte el apodo a eliminar.");
+                return;
+            }
             MascotaVO m = cGeneral.consultarMascota(apodo);
-            if (m == null) { vista.error("No existe una mascota con ese apodo."); return; }
+            if (m == null) {
+                vista.error("No existe una mascota con ese apodo.");
+                return;
+            }
 
             boolean ok = vista.confirmar("¿Eliminar " + apodo + "?\nEsta acción no se puede deshacer.");
-            if (!ok) return;
+            if (!ok) {
+                return;
+            }
 
             cGeneral.eliminarMascota(apodo);
             vista.info("Mascota eliminada.");
@@ -276,10 +368,12 @@ public final class ControlVista implements ActionListener {
     private void onSerializar() {
         try {
             String carpeta = vista.elegirCarpetaSerializacion();
-            if (carpeta == null) return; // cancelado
+            if (carpeta == null) {
+                return; // cancelado
+            }
             cGeneral.serializarMascotas(carpeta);
-            vista.info("Serializado en:\n" + carpeta +
-                       "\n\nNota: El archivo NO incluye 'Alimento Principal' (requisito).");
+            vista.info("Serializado en:\n" + carpeta
+                    + "\n\nNota: El archivo NO incluye 'Alimento Principal' (requisito).");
         } catch (Exception ex) {
             vista.error("Error al serializar: " + ex.getMessage());
         }
@@ -294,14 +388,18 @@ public final class ControlVista implements ActionListener {
     private void onSalir() {
         try {
             boolean ok = vista.confirmar("¿Salir? Se guardará el estado actual en RAF.");
-            if (!ok) return;
+            if (!ok) {
+                return;
+            }
             cGeneral.guardarEstadoEnRAF();
             vista.info("Estado guardado. ¡Hasta pronto!");
             System.exit(0);
         } catch (Exception ex) {
             vista.error("Error al guardar estado: " + ex.getMessage());
             boolean force = vista.confirmar("¿Salir sin guardar?");
-            if (force) System.exit(0);
+            if (force) {
+                System.exit(0);
+            }
         }
     }
 }
