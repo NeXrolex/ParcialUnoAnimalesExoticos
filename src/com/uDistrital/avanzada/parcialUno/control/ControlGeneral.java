@@ -40,9 +40,15 @@ public final class ControlGeneral {
         this.cAnimal = new ControlAnimal();
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     //ARRANQUE AUTOMÁTICO EN EL EDT Swing
     javax.swing.SwingUtilities.invokeLater(this::iniciarPrograma);
 }
+=======
+        // >>> ARRANQUE AUTOMÁTICO EN EL EDT (Swing) <<<
+        javax.swing.SwingUtilities.invokeLater(this::iniciarPrograma);
+    }
+>>>>>>> Stashed changes
 =======
         // >>> ARRANQUE AUTOMÁTICO EN EL EDT (Swing) <<<
         javax.swing.SwingUtilities.invokeLater(this::iniciarPrograma);
