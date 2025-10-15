@@ -1,0 +1,15 @@
+INSERT INTO `mascotas`(`apodo`, `nombreComun`, `clasificacion`, `familia`, `genero`, `especie`, `alimentoPrincipal`) VALUES ('Luna','Gato','Mamífero','Felidae','Hembra','Felis catus','Carnes');
+INSERT INTO `mascotas`(`apodo`, `nombreComun`, `clasificacion`, `familia`, `genero`, `especie`, `alimentoPrincipal`) VALUES ('Max','Perro','Mamífero','Canidae','Macho','Canis lupus familiaris','Carnes');
+INSERT INTO `mascotas`(`apodo`, `nombreComun`, `clasificacion`, `familia`, `genero`, `especie`, `alimentoPrincipal`) VALUES ('Bella','Loro','Ave','Psittacidae','Hembra','Amazona aestiva','Frutas');
+INSERT INTO `mascotas`(`apodo`, `nombreComun`, `clasificacion`, `familia`, `genero`, `especie`, `alimentoPrincipal`) VALUES ('Charlie','Conejo','Mamífero','Leporidae','Macho','Oryctolagus cuniculus','Verduras');
+INSERT INTO `mascotas`(`apodo`, `nombreComun`, `clasificacion`, `familia`, `genero`, `especie`, `alimentoPrincipal`) VALUES ('Coco','Iguana','Reptil','Iguanidae','Hembra','Iguana iguana','Verduras');
+INSERT INTO `mascotas`(`apodo`, `nombreComun`, `clasificacion`, `familia`, `genero`, `especie`, `alimentoPrincipal`) VALUES ('Rocky','Hámster','Mamífero','Cricetidae','Macho','Mesocricetus auratus','Cereales');
+INSERT INTO `mascotas`(`apodo`, `nombreComun`, `clasificacion`, `familia`, `genero`, `especie`, `alimentoPrincipal`) VALUES ('Lola','Cotorra','Ave','Psittacidae','Hembra','Amazona ochrocephala','Frutas');
+INSERT INTO `mascotas`(`apodo`, `nombreComun`, `clasificacion`, `familia`, `genero`, `especie`, `alimentoPrincipal`) VALUES ('Simba','Erizo','Mamífero','Erinaceidae','Macho','Atelerix albiventris','Omnívoros');
+INSERT INTO `mascotas`(`apodo`, `nombreComun`, `clasificacion`, `familia`, `genero`, `especie`, `alimentoPrincipal`) VALUES ('Bruno','Tortuga','Reptil','Testudinidae','Macho','Testudo graeca','Verduras');
+INSERT INTO `mascotas`(`apodo`, `nombreComun`, `clasificacion`, `familia`, `genero`, `especie`, `alimentoPrincipal`) VALUES ('Maya','Rana','Anfibio','Ranidae','Hembra','Rana temporaria','Omnívoros');
+INSERT INTO `mascotas`(`apodo`, `nombreComun`, `clasificacion`, `familia`, `genero`, `especie`, `alimentoPrincipal`) VALUES ('Molly','Pez Dorado','Pez','Cyprinidae','Hembra','Carassius auratus','Cereales');
+INSERT INTO `mascotas`(`apodo`, `nombreComun`, `clasificacion`, `familia`, `genero`, `especie`, `alimentoPrincipal`) VALUES ('Oliver','Caracol Gigante','Invertebrado','Achatinidae','Macho','Achatina fulica','Verduras');
+INSERT INTO `mascotas`(`apodo`, `nombreComun`, `clasificacion`, `familia`, `genero`, `especie`, `alimentoPrincipal`) VALUES ('Toby','Periquito','Ave','Psittacidae','Macho','Melopsittacus undulatus','Cereales');
+INSERT INTO `mascotas`(`apodo`, `nombreComun`, `clasificacion`, `familia`, `genero`, `especie`, `alimentoPrincipal`) VALUES ('Nemo','Pez Payaso','Pez','Pomacentridae','Macho','Amphiprion ocellaris','Omnívoros');
+INSERT INTO `mascotas`(`apodo`, `nombreComun`, `clasificacion`, `familia`, `genero`, `especie`, `alimentoPrincipal`) VALUES ('Kiwi','Guacamayo','Ave','Psittacidae','Hembra','Ara ararauna','Frutas');

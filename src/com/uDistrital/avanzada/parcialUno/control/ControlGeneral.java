@@ -30,23 +30,20 @@ public final class ControlGeneral {
     private ControlVista cVista;
 
     /**
-     * Constructor por defecto (ajusta la ruta del .properties según tu
-     * proyecto).
+     * Constructor por defecto
      */
     public ControlGeneral() {
-    this.cProperties    = new ControlProperties("D:\\Proyectos programacion\\Parcial1\\ParcialUnoAnimalesExoticos\\src\\data\\mascotas.properties");
-    this.cRAF           = new ControlRAF();
-    this.cSerializacion = new ControlSerializacion();
-    this.cAnimal        = new ControlAnimal();
+        this.cProperties = new ControlProperties("D:\\Proyectos programacion\\Parcial1\\ParcialUnoAnimalesExoticos\\src\\data\\mascotas.properties");
+        this.cRAF = new ControlRAF();
+        this.cSerializacion = new ControlSerializacion();
+        this.cAnimal = new ControlAnimal();
 
-    //ARRANQUE AUTOMÁTICO EN EL EDT Swing
-    javax.swing.SwingUtilities.invokeLater(this::iniciarPrograma);
-}
+        //ARRANQUE AUTOMÁTICO EN EL EDT Swing
+        javax.swing.SwingUtilities.invokeLater(this::iniciarPrograma);
+    }
 
     /**
-     * Arranque del sistema. - Crea ControlVista (que a su vez crea y muestra la
-     * VistaPrincipal). - Ejecuta el flujo de carga inicial (RAF -> .properties
-     * + completar).
+     * metodo encargado de arrancar el programa
      */
     public void iniciarPrograma() {
         try {
@@ -61,10 +58,12 @@ public final class ControlGeneral {
     }
 
     /* =================== Flujo de carga inicial =================== */
+    /**
+     * genera el flujo del programa
+     */
     private void flujoCargaInicial() {
         try {
-            
-            
+
             // Fallback a .properties: completar antes de habilitar el resto
             List<MascotaVO> desdeProp = cProperties.cargarTodas();
             if (desdeProp == null || desdeProp.isEmpty()) {
@@ -78,7 +77,9 @@ public final class ControlGeneral {
             } else {
                 cargarMascotasABD(desdeProp);
             }
-        }catch (Exception e) { e.printStackTrace(); }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -92,7 +93,12 @@ public final class ControlGeneral {
     }
 
     /**
-     * Inserta en BD evitando duplicados por apodo.
+     * Verifica la existencia previa de cada mascota por apodo antes de
+     * insertarla. Solo registra mascotas nuevas, ignorando duplicados y valores
+     * nulos.
+     *
+     * @param mascotas lista de mascotas a cargar
+     * @throws Exception
      */
     private void cargarMascotasABD(List<MascotaVO> mascotas) throws Exception {
         if (mascotas == null) {
@@ -118,6 +124,18 @@ public final class ControlGeneral {
     }
 
     /* =================== API para la vista: CRUD & consultas =================== */
+    /**
+     *
+     * @param apodo identificador único de la mascota
+     * @param nombreComun nombre común del animal
+     * @param clasificacion clasificación taxonómica principal
+     * @param familia familia taxonómica
+     * @param genero género taxonómico
+     * @param especie especie taxonómica
+     * @param alimento tipo de alimento principal
+     * @throws Exception si ya existe una mascota con el mismo apodo o error en
+     * registro
+     */
     public void registrarMascota(String apodo, String nombreComun, String clasificacion,
             String familia, String genero, String especie, String alimento) throws Exception {
         Animal existente = cAnimal.consultar(apodo);
@@ -127,6 +145,18 @@ public final class ControlGeneral {
         cAnimal.registrar(apodo, nombreComun, clasificacion, familia, genero, especie, alimento);
     }
 
+    /**
+     * valida la existencia de las mascotas antes de la modificacion
+     *
+     * @param apodo identificador único de la mascota a modificar
+     * @param nombreComun nuevo nombre común
+     * @param clasificacion nueva clasificación
+     * @param familia nueva familia
+     * @param genero nuevo género
+     * @param especie nueva especie
+     * @param alimento nuevo tipo de alimento
+     * @throws Exception si no existe la mascota o error en modificación
+     */
     public void modificarMascota(String apodo, String nombreComun, String clasificacion,
             String familia, String genero, String especie, String alimento) throws Exception {
         Animal existente = cAnimal.consultar(apodo);
@@ -136,6 +166,12 @@ public final class ControlGeneral {
         cAnimal.modificar(apodo, nombreComun, clasificacion, familia, genero, especie, alimento);
     }
 
+    /**
+     * verifica la mascota a eliminar
+     *
+     * @param apodo identificador único de la mascota a eliminar
+     * @throws Exception si no existe la mascota o error en eliminación
+     */
     public void eliminarMascota(String apodo) throws Exception {
         Animal existente = cAnimal.consultar(apodo);
         if (existente == null) {
@@ -144,26 +180,64 @@ public final class ControlGeneral {
         cAnimal.eliminar(apodo);
     }
 
+    /**
+     * consulta mascota por su apodo
+     *
+     * @param apodo identificador único de la mascota
+     * @return objeto MascotaVO si existe, null en caso contrario
+     * @throws Exception si ocurre error durante la consulta
+     */
     public MascotaVO consultarMascota(String apodo) throws Exception {
         Animal a = cAnimal.consultar(apodo);
         return (a instanceof MascotaVO) ? (MascotaVO) a : null;
     }
 
+    /**
+     * lista las mascotas registradas en el sistema
+     *
+     * @return lista inmutable de todas las mascotas; lista vacía si no hay
+     * datos
+     * @throws Exception si ocurre error durante la consulta
+     */
     public List<MascotaVO> listarTodasLasMascotas() throws Exception {
         List<MascotaVO> l = cAnimal.listarTodas();
         return (l == null) ? Collections.emptyList() : new ArrayList<>(l);
     }
 
+    /**
+     * Consulta mascotas por clasificacion
+     *
+     * @param clasificacion clasificación a buscar
+     * @return lista de mascotas que coinciden con la clasificación; lista vacía
+     * si no hay coincidencias
+     * @throws Exception si ocurre error durante la consulta
+     */
     public List<MascotaVO> consultarPorClasificacion(String clasificacion) throws Exception {
         List<MascotaVO> l = cAnimal.consultarPorClasificacion(clasificacion);
         return (l == null) ? Collections.emptyList() : new ArrayList<>(l);
     }
 
+    /**
+     * Consulta mascotas por familia
+     *
+     * @param familia familia a buscar 
+     * @return lista de mascotas que pertenecen a la familia; lista vacía si no
+     * hay coincidencias
+     * @throws Exception si ocurre error durante la consulta
+     */
     public List<MascotaVO> consultarPorFamilia(String familia) throws Exception {
         List<MascotaVO> l = cAnimal.consultarPorFamilia(familia);
         return (l == null) ? Collections.emptyList() : new ArrayList<>(l);
     }
 
+    /**
+     * Consulta mascota por alimento
+     *
+     * @param alimento tipo de alimento 
+     * @return lista de mascotas con ese tipo de alimentación; lista vacía si no
+     * hay coincidencias
+     * @throws Exception si ocurre error durante la consulta
+     */
     public List<MascotaVO> consultarPorTipoAlimentoVO(String alimento) throws Exception {
         List<MascotaVO> l = cAnimal.consultarPorTipoAlimento(alimento);
         return (l == null) ? Collections.emptyList() : new ArrayList<>(l);

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-10-2025 a las 05:59:06
+-- Tiempo de generación: 15-10-2025 a las 14:45:55
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -24,10 +24,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `animales`
+-- Estructura de tabla para la tabla `mascotas`
 --
 
-CREATE TABLE `animales` (
+CREATE TABLE `mascotas` (
   `apodo` varchar(30) NOT NULL,
   `nombreComun` varchar(30) NOT NULL,
   `clasificacion` varchar(30) NOT NULL,
@@ -42,9 +42,9 @@ CREATE TABLE `animales` (
 --
 
 --
--- Indices de la tabla `animales`
+-- Indices de la tabla `mascotas`
 --
-ALTER TABLE `animales`
+ALTER TABLE `mascotas`
   ADD PRIMARY KEY (`apodo`);
 COMMIT;
 
