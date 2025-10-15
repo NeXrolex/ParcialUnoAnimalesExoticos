@@ -13,7 +13,7 @@ import java.util.List;
  * Clase encargada del manejo del random access file 
  * 
  *
- * @author santi, Alex
+ * @author Alex
  */
 public class ControlRAF {
     private RAFDAO rafDAO;

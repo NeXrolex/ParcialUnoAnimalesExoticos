@@ -6,7 +6,7 @@ package com.uDistrital.avanzada.parcialUno.control;
 
 /**
  *
- * @author santi
+ * @author Alex
  */
 import com.uDistrital.avanzada.parcialUno.modelo.DAO.PropertiesDAO;
 import com.uDistrital.avanzada.parcialUno.modelo.MascotaVO;
@@ -14,59 +14,70 @@ import java.util.ArrayList;
 
 import java.util.List;
 
-public class ControlProperties {
+public final class ControlProperties {
 
-    private final PropertiesDAO dao;
+    private final PropertiesDAO proDao;
 
-    public ControlProperties(String rutaArchivo) {
-        this.dao = new PropertiesDAO(rutaArchivo);
+    /**
+     * @param ruta Ruta del archivo .properties (p.ej.
+     * "src/data/mascotas.properties")
+     */
+    public ControlProperties(String ruta) {
+        if (ruta == null || ruta.trim().isEmpty()) {
+            throw new IllegalArgumentException("La ruta del properties"
+                    + " no puede estar vacía.");
+        }
+        this.proDao = new PropertiesDAO(ruta.trim());
     }
 
     /**
-     * Carga las mascotas desde el archivo properties y completa los campos
-     * faltantes mediante el ControlVista (cuando esté implementado).
-     *
-     * @return lista de mascotas con todos los datos completados
+     * Carga todas las mascotas definidas en el .properties.
      */
-    public List<MascotaVO> cargarMascotas() {
-        List<MascotaVO> listaFinal = new ArrayList<>();
-        try {
-            List<MascotaVO> mascotas = dao.listarTodas();
-            for (MascotaVO m : mascotas) {
-                listaFinal.add(m);
-            }
-
-        } catch (Exception e) {
-            throw new RuntimeException("Error al cargar las mascotas desde Properties", e);
-        }
-        return listaFinal;
-
-    }
-
-    public List<MascotaVO> obtenerMascotasIncompletas(List<MascotaVO> listaFinal) {
-        List<MascotaVO> incompletas = new ArrayList<>();
-        for (MascotaVO m : listaFinal) {
-            if (tieneCamposIncompletos(m)) {
-                incompletas.add(m);
-            }
-        }
-        return incompletas;
+    public List<MascotaVO> cargarTodas() throws Exception {
+        return proDao.listarTodas();
     }
 
     /**
-     *
+     * Consulta por apodo dentro del .properties.
      */
-    private boolean tieneCamposIncompletos(MascotaVO m) {
-        return esVacio(m.getNombreComun())
-                || esVacio(m.getApodo())
-                || esVacio(m.getClasificacion())
-                || esVacio(m.getFamilia())
-                || esVacio(m.getGenero())
-                || esVacio(m.getEspecie())
-                || esVacio(m.getAlimentoPrincipal());
+    public MascotaVO consultarPorApodo(String apodo) throws Exception {
+        return proDao.consultar(apodo);
     }
 
-    private boolean esVacio(String s) {
+    /**
+     * Lista sólo las mascotas con datos faltantes según el enunciado.
+     */
+    public List<MascotaVO> filtrarIncompletas(List<MascotaVO> lista) {
+        List<MascotaVO> out = new ArrayList<>();
+        if (lista == null) {
+            return out;
+        }
+        for (MascotaVO m : lista) {
+            if (esIncompleta(m)) {
+                out.add(m);
+            }
+        }
+        return out;
+    }
+
+    /**
+     * Reglas de completitud: apodo, nombre, clasificación, familia, género,
+     * especie, alimento.
+     */
+    public boolean esIncompleta(MascotaVO m) {
+        if (m == null) {
+            return true;
+        }
+        return vacio(m.getApodo())
+                || vacio(m.getNombreComun())
+                || vacio(m.getClasificacion())
+                || vacio(m.getFamilia())
+                || vacio(m.getGenero())
+                || vacio(m.getEspecie())
+                || vacio(m.getAlimentoPrincipal());
+    }
+
+    private boolean vacio(String s) {
         return s == null || s.trim().isEmpty();
     }
 }
