@@ -67,7 +67,7 @@ public final class ControlGeneral {
             // Fallback a .properties: completar antes de habilitar el resto
             List<MascotaVO> desdeProp = cProperties.cargarTodas();
             if (desdeProp == null || desdeProp.isEmpty()) {
-                System.out.println("no se puede");
+//                System.out.println("no se puede");
                 return;
             }
 
@@ -78,7 +78,7 @@ public final class ControlGeneral {
                 cargarMascotasABD(desdeProp);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+           
         }
     }
 
