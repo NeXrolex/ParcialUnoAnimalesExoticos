@@ -29,7 +29,7 @@ public class ArchivoRandomAccessFile {
         // Garantizar existencia física del archivo y su directorio
         File parent = archivo.getParentFile();
         if (parent != null && !parent.exists()) {
-            parent.mkdirs(); //
+            parent.mkdirs(); //crea sus directorios si no existe
         }
 
         if (!archivo.exists()) {

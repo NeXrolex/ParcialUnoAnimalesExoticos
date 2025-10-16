@@ -147,10 +147,10 @@ public class ControlAnimal {
             String familia, String genero, String especie, 
             String alimentoPrincipal) throws Exception {
         validarApodo(apodo);
-        MascotaVO vo = new MascotaVO(
+        Animal vo = new MascotaVO(
                 apodo, nombreComun, clasificacion, familia, genero,
                 especie, alimentoPrincipal);
-        masDao.modificar(vo);
+        masDao.modificar((MascotaVO) vo);
     }
     
     /**
